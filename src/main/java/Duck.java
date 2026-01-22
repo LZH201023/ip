@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class Duck {
-    private static final Task[] texts = new Task[100];
-    private static int textsLen = 0;
+    private static final TaskList tasks = new TaskList();
+    private static final String HLINE = "-".repeat(50);
 
     private static boolean isBye(String s) {
         if (s.length() != 3) {
@@ -21,11 +21,23 @@ public class Duck {
 
         int num = 0;
         if (s.startsWith("mark")) {
-            char c = s.charAt(5);
-            num = Character.isDigit(c) ? c - '0' : 0;
+            String str = s.substring(4).stripLeading();
+            int idx = 0;
+            while (idx < str.length() && Character.isDigit(str.charAt(idx))) {
+                idx++;
+            }
+            if (idx == 0) {
+                return -1;
+            } else {
+                int mult = 1;
+                for (int i = idx - 1; i >= 0; i--) {
+                    num += mult * (str.charAt(i) - '0');
+                    mult *= 10;
+                }
+            }
         }
 
-        if (num > 0 && num <= textsLen) {
+        if (num > 0 && num <= tasks.getLength()) {
             return num;
         } else {
             return -1;
@@ -39,54 +51,115 @@ public class Duck {
 
         int num = 0;
         if (s.startsWith("unmark")) {
-            char c = s.charAt(7);
-            num = Character.isDigit(c) ? c - '0' : 0;
+            String str = s.substring(6).stripLeading();
+            int idx = 0;
+            while (idx < str.length() && Character.isDigit(str.charAt(idx))) {
+                idx++;
+            }
+            if (idx == 0) {
+                return -1;
+            } else {
+                int mult = 1;
+                for (int i = idx - 1; i >= 0; i--) {
+                    num += mult * (str.charAt(i) - '0');
+                    mult *= 10;
+                }
+            }
         }
 
-        if (num > 0 && num <= textsLen) {
+        if (num > 0 && num <= tasks.getLength()) {
             return num;
         } else {
             return -1;
         }
     }
 
+    private static void parseAndAdd(String s) {
+        String task;
+        s = s.strip();
+        boolean tag = true;
+        if (s.startsWith("todo")) {
+            task = s.substring(4).stripLeading();
+            if (task.isEmpty()) {
+                tag = false;
+            } else {
+                tasks.addTask(new TodoTask(task));
+            }
+        } else if (s.startsWith("deadline")) {
+            String str = s.substring(8).stripLeading();
+            String[] parts = str.split("/by", 2);
+            if (parts.length == 2 && !parts[0].isEmpty() && !parts[1].isEmpty()) {
+                parts[0] = parts[0].strip();
+                parts[1] = parts[1].strip();
+                DeadlineTask deadline = new DeadlineTask(parts[0], parts[1]);
+                tasks.addTask(deadline);
+            } else {
+                tag = false;
+            }
+        } else if (s.startsWith("event")) {
+            String str = s.substring(5).stripLeading();
+            String[] parts1 = str.split("/from");
+            if (parts1.length != 2 || parts1[0].isEmpty()) {
+                tag = false;
+            } else {
+                String[] parts2 = parts1[1].strip().split("/to");
+                if (parts2.length != 2 || parts2[0].isEmpty() || parts2[1].isEmpty()) {
+                    tag = false;
+                } else {
+                    parts1[0] = parts1[0].strip();
+                    parts2[0] = parts2[0].strip();
+                    parts2[1] = parts2[1].strip();
+                    EventTask event = new EventTask(parts1[0], parts2[0], parts2[1]);
+                    tasks.addTask(event);
+                }
+            }
+        } else {
+            tag = false;
+        }
+
+        if (!tag) {
+            System.out.println(HLINE + "\n" + s + "\n" + HLINE);
+            return;
+        }
+
+        System.out.println(HLINE + "\n" + "Got it. I've added this task:\n" +
+                tasks.getTask(tasks.getLength() - 1) +
+                "\nNow you have " + tasks.getLength() + " tasks in the list\n" + HLINE);
+
+    }
+
     public static void main(String[] args) {
-        String hLine = "-".repeat(50);
         Scanner sc = new Scanner(System.in);
-        System.out.println(hLine + "\nHello! I'm Duck" +
-                            "\nWhat can I do for you?\n" + hLine);
+        System.out.println(HLINE + "\nHello! I'm Duck" +
+                            "\nWhat can I do for you?\n" + HLINE);
 
         while (true) {
             String next = sc.nextLine();
-            String s = next.stripLeading();
+            String s = next.strip();
             int idx;
             if (s.equals("list")) {
-                System.out.println(hLine);
-                for (int i = 1; i <= textsLen; i++) {
-                    System.out.println("\n" + i + "." + texts[i - 1]);
-                }
-                System.out.println("\n" + hLine);
+                System.out.println(HLINE + "\n" +
+                        "Here are the tasks in your list:\n" + tasks);
+                System.out.println("\n" + HLINE);
             } else if ((idx = parseMark(s)) > 0) {
-                texts[idx - 1].markAsDone();
-                System.out.println(hLine + "\n" +
+                tasks.markTaskAt(idx - 1);
+                System.out.println(HLINE + "\n" +
                         "Nice! I've marked this task as done:\n" +
-                        texts[idx - 1] + "\n" +
-                        hLine);
+                        tasks.getTask(idx - 1) + "\n" +
+                        HLINE);
             } else if ((idx = parseUnmark(s)) > 0) {
-                texts[idx - 1].markAsUndone();
-                System.out.println(hLine + "\n" +
+                tasks.unmarkTaskAt(idx - 1);
+                System.out.println(HLINE + "\n" +
                         "Ok, I've marked this task as not done yet:\n" +
-                        texts[idx - 1] + "\n" +
-                        hLine);
+                        tasks.getTask(idx - 1) + "\n" +
+                        HLINE);
             } else if (isBye(s)) {
-                System.out.println(hLine + "\n" +
+                System.out.println(HLINE + "\n" +
                         "Bye. Hope to see you again soon!\n" +
-                        hLine);
+                        HLINE);
                 break;
             } else { // Add task
-                Task task = new Task(next);
-                texts[textsLen++] = task;
-                System.out.println(hLine + "\nadded: " + next + "\n" + hLine);
+                parseAndAdd(next);
             }
         }
     }
