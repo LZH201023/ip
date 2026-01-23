@@ -156,6 +156,8 @@ public class Duck {
 
     }
 
+    private enum COMMAND {LIST, MARK, UNMARK, DELETE, BYE, ADD};  //To be used in the future if required
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
