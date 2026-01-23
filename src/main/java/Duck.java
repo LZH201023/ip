@@ -85,26 +85,31 @@ public class Duck {
                 tasks.addTask(new TodoTask(task));
             }
         } else if (s.startsWith("deadline")) {
-            String[] parts = s.split("/by", 2);
-            if (parts.length == 2 && !parts[0].isEmpty() && !parts[1].isEmpty()) {
+            String[] parts = s.substring(8).concat(" ").split("/by");
+            if (parts[0].isBlank()){
+                throw new DuckException("Missing deadline description!");
+            } else if (parts.length == 2 && !parts[1].isBlank()) {
                 parts[0] = parts[0].strip();
                 parts[1] = parts[1].strip();
                 DeadlineTask deadline = new DeadlineTask(parts[0], parts[1]);
                 tasks.addTask(deadline);
             } else if (parts.length < 2) {
-                throw new DuckException("Missing deadline!");
-            } else {
-                System.out.println(parts[0]);
                 throw new DuckException("Wrong command format.");
+            } else {
+                throw new DuckException("Missing deadline!");
             }
         } else if (s.startsWith("event")) {
-            String[] parts1 = s.split("/from");
-            if (parts1.length != 2 || parts1[0].isEmpty()) {
-//                tag = false;
+            String[] parts1 = s.substring(5).concat(" ").split("/from");
+            if (parts1[0].isBlank()) {
+                throw new DuckException("Missing event description!");
+            } else if (parts1.length != 2 || parts1[1].isBlank()) {
+                throw new DuckException("Oops, did you mess up starting time?");
             } else {
-                String[] parts2 = parts1[1].strip().split("/to");
-                if (parts2.length != 2 || parts2[0].isEmpty() || parts2[1].isEmpty()) {
-//                    tag = false;
+                String[] parts2 = parts1[1].concat(" ").split("/to");
+                if (parts2.length != 2 || parts2[1].isBlank()) {
+                    throw new DuckException("Oops, did you mess up ending time?");
+                } else if (parts2[0].isBlank()) {
+                    throw new DuckException("Oops, did you mess up starting time?");
                 } else {
                     parts1[0] = parts1[0].strip();
                     parts2[0] = parts2[0].strip();
@@ -132,21 +137,21 @@ public class Duck {
         while (true) {
             String next = sc.nextLine();
             String command = next.strip();
-            if (command.startsWith("list")) {
+            if (command.equals("list")) {
                 System.out.println(HLINE + "\n" +
                         "Here are the tasks in your list:\n" + tasks);
-                System.out.println("\n" + HLINE);
+                System.out.println(HLINE);
             } else if (command.startsWith("mark")) {
                 try {
                     parseAndMark(next.strip().substring(4).strip());
                 } catch (DuckException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println(HLINE + "\n" + e.getMessage() + "\n" + HLINE);
                 }
             } else if (command.startsWith("unmark")) {
                 try {
                     parseAndUnmark(next.strip().substring(6).strip());
                 } catch (DuckException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println(HLINE + "\n" + e.getMessage() + "\n" + HLINE);
                 }
             } else if (isBye(command)) {
                 System.out.println(HLINE + "\n" +

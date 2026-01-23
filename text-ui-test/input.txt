@@ -1,7 +1,21 @@
 hello
 todo mark me
-deadline    /by 13th Jan
-event /from 6:30 Today  /to next year
+deadline   something /by 13th Jan
+event other/from 6:30 Today  /to next year
   mark 001
 unmark 2
+mark happy
+mark 099
+unmark -1
+unmark  op
+list
+  deadline
+deadline party/by
+deadline party
+event 8 /from /to 8
+todo
+ event /from 5 /to 0
+event another_party /from 6
+event another_party /from 6 /to 9/to
+list all
 BYE
