@@ -18,4 +18,10 @@ todo
 event another_party /from 6
 event another_party /from 6 /to 9/to
 list all
+delete
+delete 1
+delete 10
+delete 2
+delete   1
+list
 BYE

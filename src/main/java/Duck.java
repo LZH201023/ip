@@ -19,6 +19,34 @@ public class Duck {
         return b1 && b2 && b3;
     }
 
+    private static void parseAndDelete(String s) throws DuckException {
+        int num = 0;
+        int idx = 0;
+        while (idx < s.length() && Character.isDigit(s.charAt(idx))) {
+            idx++;
+        }
+        if (!s.isEmpty() && idx == s.length()) {
+            int mult = 1;
+            for (int i = idx - 1; i >= 0; i--) {
+                num += mult * (s.charAt(i) - '0');
+                mult *= 10;
+            }
+        } else {
+            throw new DuckException("Oh no, please delete a proper task!");
+        }
+
+
+        if (num > 0 && num <= tasks.getLength()) {
+            Task temp = tasks.popTaskAt(num - 1);
+            System.out.println(HLINE + "\n" +
+                    "Noted. I've removed this task:\n" +
+                    temp + "\n" +
+                    HLINE);
+        } else {
+            throw new DuckException("Task index out of bound.");
+        }
+    }
+
     private static void parseAndMark(String s) throws DuckException {
         int num = 0;
         int idx = 0;
@@ -143,13 +171,19 @@ public class Duck {
                 System.out.println(HLINE);
             } else if (command.startsWith("mark")) {
                 try {
-                    parseAndMark(next.strip().substring(4).strip());
+                    parseAndMark(command.substring(4).stripLeading());
                 } catch (DuckException e) {
                     System.out.println(HLINE + "\n" + e.getMessage() + "\n" + HLINE);
                 }
             } else if (command.startsWith("unmark")) {
                 try {
-                    parseAndUnmark(next.strip().substring(6).strip());
+                    parseAndUnmark(command.substring(6).stripLeading());
+                } catch (DuckException e) {
+                    System.out.println(HLINE + "\n" + e.getMessage() + "\n" + HLINE);
+                }
+            } else if (command.startsWith("delete")) {
+                try {
+                    parseAndDelete(command.substring(6).stripLeading());
                 } catch (DuckException e) {
                     System.out.println(HLINE + "\n" + e.getMessage() + "\n" + HLINE);
                 }
