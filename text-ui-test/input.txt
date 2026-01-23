@@ -1,0 +1,7 @@
+hello
+todo mark me
+deadline    /by 13th Jan
+event /from 6:30 Today  /to next year
+  mark 001
+unmark 2
+BYE

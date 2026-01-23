@@ -3,6 +3,11 @@ import java.util.Scanner;
 public class Duck {
     private static final TaskList tasks = new TaskList();
     private static final String HLINE = "-".repeat(50);
+    private static final String DUCK = " ____        _______  __\n" +
+            "|  _ \\ _   _|  __| | / /\n" +
+            "| | | | | | | |  | /  /\n" +
+            "| |_| | |_| | |__| |\\ \\\n" +
+            "|____/ \\__,_|____|_| \\_\\";
 
     private static boolean isBye(String s) {
         if (s.length() != 3) {
@@ -14,97 +19,92 @@ public class Duck {
         return b1 && b2 && b3;
     }
 
-    private static int parseMark(String s) {
-        if (s.length() < 6) {
-            return -1;
+    private static void parseAndMark(String s) throws DuckException {
+        int num = 0;
+        int idx = 0;
+        while (idx < s.length() && Character.isDigit(s.charAt(idx))) {
+            idx++;
+        }
+        if (idx == s.length()) {
+            int mult = 1;
+            for (int i = idx - 1; i >= 0; i--) {
+                num += mult * (s.charAt(i) - '0');
+                mult *= 10;
+            }
+        } else {
+            throw new DuckException("Oh no, please mark a proper task!");
         }
 
-        int num = 0;
-        if (s.startsWith("mark")) {
-            String str = s.substring(4).stripLeading();
-            int idx = 0;
-            while (idx < str.length() && Character.isDigit(str.charAt(idx))) {
-                idx++;
-            }
-            if (idx == 0) {
-                return -1;
-            } else {
-                int mult = 1;
-                for (int i = idx - 1; i >= 0; i--) {
-                    num += mult * (str.charAt(i) - '0');
-                    mult *= 10;
-                }
-            }
-        }
 
         if (num > 0 && num <= tasks.getLength()) {
-            return num;
+            tasks.markTaskAt(num - 1);
+            System.out.println(HLINE + "\n" +
+                    "Nice! I've marked this task as done:\n" +
+                    tasks.getTask(num - 1) + "\n" +
+                    HLINE);
         } else {
-            return -1;
+            throw new DuckException("Task index out of bound.");
         }
     }
 
-    private static int parseUnmark(String s) {
-        if (s.length() < 8) {
-            return -1;
+    private static void parseAndUnmark(String s) throws DuckException {
+        int num = 0;
+        int idx = 0;
+        while (idx < s.length() && Character.isDigit(s.charAt(idx))) {
+            idx++;
+        }
+        if (idx == s.length()) {
+            int mult = 1;
+            for (int i = idx - 1; i >= 0; i--) {
+                num += mult * (s.charAt(i) - '0');
+                mult *= 10;
+            }
+        } else {
+            throw new DuckException("Oh no, please unmark a proper task!");
         }
 
-        int num = 0;
-        if (s.startsWith("unmark")) {
-            String str = s.substring(6).stripLeading();
-            int idx = 0;
-            while (idx < str.length() && Character.isDigit(str.charAt(idx))) {
-                idx++;
-            }
-            if (idx == 0) {
-                return -1;
-            } else {
-                int mult = 1;
-                for (int i = idx - 1; i >= 0; i--) {
-                    num += mult * (str.charAt(i) - '0');
-                    mult *= 10;
-                }
-            }
-        }
 
         if (num > 0 && num <= tasks.getLength()) {
-            return num;
+            tasks.unmarkTaskAt(num - 1);
+            System.out.println(HLINE + "\n" +
+                    "Ok, I've marked this task as not done yet:\n" +
+                    tasks.getTask(num - 1) + "\n" +
+                    HLINE);
         } else {
-            return -1;
+            throw new DuckException("Task index out of bound.");
         }
     }
 
-    private static void parseAndAdd(String s) {
+    private static void parseAndAdd(String s) throws DuckException {
         String task;
-        s = s.strip();
-        boolean tag = true;
         if (s.startsWith("todo")) {
             task = s.substring(4).stripLeading();
             if (task.isEmpty()) {
-                tag = false;
+                throw new DuckException("Missing todo description!");
             } else {
                 tasks.addTask(new TodoTask(task));
             }
         } else if (s.startsWith("deadline")) {
-            String str = s.substring(8).stripLeading();
-            String[] parts = str.split("/by", 2);
+            String[] parts = s.split("/by", 2);
             if (parts.length == 2 && !parts[0].isEmpty() && !parts[1].isEmpty()) {
                 parts[0] = parts[0].strip();
                 parts[1] = parts[1].strip();
                 DeadlineTask deadline = new DeadlineTask(parts[0], parts[1]);
                 tasks.addTask(deadline);
+            } else if (parts.length < 2) {
+                throw new DuckException("Missing deadline!");
             } else {
-                tag = false;
+                System.out.println(parts[0]);
+                throw new DuckException("Wrong command format.");
             }
         } else if (s.startsWith("event")) {
-            String str = s.substring(5).stripLeading();
-            String[] parts1 = str.split("/from");
+            String[] parts1 = s.split("/from");
             if (parts1.length != 2 || parts1[0].isEmpty()) {
-                tag = false;
+//                tag = false;
             } else {
                 String[] parts2 = parts1[1].strip().split("/to");
                 if (parts2.length != 2 || parts2[0].isEmpty() || parts2[1].isEmpty()) {
-                    tag = false;
+//                    tag = false;
                 } else {
                     parts1[0] = parts1[0].strip();
                     parts2[0] = parts2[0].strip();
@@ -114,12 +114,7 @@ public class Duck {
                 }
             }
         } else {
-            tag = false;
-        }
-
-        if (!tag) {
-            System.out.println(HLINE + "\n" + s + "\n" + HLINE);
-            return;
+            throw new DuckException("Sorry I can't understand...");
         }
 
         System.out.println(HLINE + "\n" + "Got it. I've added this task:\n" +
@@ -130,36 +125,40 @@ public class Duck {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println(HLINE + "\nHello! I'm Duck" +
+
+        System.out.println(HLINE + "\nHello! I'm\n" + DUCK +
                             "\nWhat can I do for you?\n" + HLINE);
 
         while (true) {
             String next = sc.nextLine();
-            String s = next.strip();
-            int idx;
-            if (s.equals("list")) {
+            String command = next.strip();
+            if (command.startsWith("list")) {
                 System.out.println(HLINE + "\n" +
                         "Here are the tasks in your list:\n" + tasks);
                 System.out.println("\n" + HLINE);
-            } else if ((idx = parseMark(s)) > 0) {
-                tasks.markTaskAt(idx - 1);
-                System.out.println(HLINE + "\n" +
-                        "Nice! I've marked this task as done:\n" +
-                        tasks.getTask(idx - 1) + "\n" +
-                        HLINE);
-            } else if ((idx = parseUnmark(s)) > 0) {
-                tasks.unmarkTaskAt(idx - 1);
-                System.out.println(HLINE + "\n" +
-                        "Ok, I've marked this task as not done yet:\n" +
-                        tasks.getTask(idx - 1) + "\n" +
-                        HLINE);
-            } else if (isBye(s)) {
+            } else if (command.startsWith("mark")) {
+                try {
+                    parseAndMark(next.strip().substring(4).strip());
+                } catch (DuckException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else if (command.startsWith("unmark")) {
+                try {
+                    parseAndUnmark(next.strip().substring(6).strip());
+                } catch (DuckException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else if (isBye(command)) {
                 System.out.println(HLINE + "\n" +
                         "Bye. Hope to see you again soon!\n" +
                         HLINE);
                 break;
             } else { // Add task
-                parseAndAdd(next);
+                try {
+                    parseAndAdd(command);
+                } catch (DuckException e) {
+                    System.out.println(HLINE + "\n" + e.getMessage() + "\n" + HLINE);
+                }
             }
         }
     }
