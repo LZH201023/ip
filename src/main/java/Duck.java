@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Duck {
     private static final TaskList tasks = new TaskList();
     private static final String HLINE = "-".repeat(50);
-    private static final String DUCK = " ____        _______  __\n" +
+    private static final String DUCK = " ____        ____ _   __\n" +
             "|  _ \\ _   _|  __| | / /\n" +
             "| | | | | | | |  | /  /\n" +
             "| |_| | |_| | |__| |\\ \\\n" +
