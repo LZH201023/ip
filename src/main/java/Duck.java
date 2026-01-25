@@ -1,7 +1,9 @@
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileWriter;
+import java.time.LocalDate;
 
 public class Duck {
     private static final TaskList tasks = new TaskList();
@@ -134,44 +136,62 @@ public class Duck {
     private static void parseAndAdd(String s) throws IOException, DuckException {
         String task;
         if (s.startsWith("todo")) {
-            task = s.substring(4).stripLeading();
-            if (task.isEmpty()) {
+            task = s.substring(4);
+            if (task.isBlank()) {
                 throw new DuckException("Missing todo description!");
             } else {
-                tasks.addTask(new TodoTask(task));
+                tasks.addTask(new TodoTask(task.strip()));
             }
         } else if (s.startsWith("deadline")) {
-            String[] parts = s.substring(8).concat(" ").split("/by");
-            if (parts[0].isBlank()){
-                throw new DuckException("Missing deadline description!");
-            } else if (parts.length == 2 && !parts[1].isBlank()) {
-                parts[0] = parts[0].strip();
-                parts[1] = parts[1].strip();
-                DeadlineTask deadline = new DeadlineTask(parts[0], parts[1]);
-                tasks.addTask(deadline);
-            } else if (parts.length < 2) {
-                throw new DuckException("Wrong command format.");
-            } else {
+            String[] parts = s.substring(8).concat(" ").split("/");
+            if (parts.length < 2) {
                 throw new DuckException("Missing deadline!");
+            } else if (parts.length > 2) {
+                throw new DuckException("Wrong command format.");
+            } else if (parts[0].isBlank()){
+                throw new DuckException("Missing deadline description!");
+            } else if (!parts[1].startsWith("by")) {
+                throw new DuckException("Wrong command format.");
+            } else if (parts[1].substring(2).isBlank()){
+                throw new DuckException("Did you forget to specify deadline?");
+            } else {
+                parts[0] = parts[0].strip();
+                parts[1] = parts[1].substring(2).strip();
+                try {
+                    LocalDate ddl = LocalDate.parse(parts[1]);
+                    DeadlineTask deadline = new DeadlineTask(parts[0], ddl);
+                    tasks.addTask(deadline);
+                } catch (DateTimeParseException e) {
+                    throw new DuckException("Wrong date format:\n" + e.getMessage());
+                }
             }
         } else if (s.startsWith("event")) {
-            String[] parts1 = s.substring(5).concat(" ").split("/from");
-            if (parts1[0].isBlank()) {
+            String[] parts = s.substring(5).concat(" ").split("/");
+            if (parts.length < 2) {
+                throw new DuckException("Missing time of event!");
+            } else if (parts.length == 2) {
+                throw new DuckException("Please specify a proper timing for event.");
+            } else if (parts.length > 3) {
+                throw new DuckException("Wrong command format.");
+            } else if (parts[0].isBlank()) {
                 throw new DuckException("Missing event description!");
-            } else if (parts1.length != 2 || parts1[1].isBlank()) {
-                throw new DuckException("Oops, did you mess up starting time?");
+            } else if (!parts[1].startsWith("from") || !parts[2].startsWith("to")) {
+                throw new DuckException("Wrong command format.");
+            } else if (parts[1].substring(4).isBlank()) {
+                throw new DuckException("Oops, did you forget starting time?");
+            } else if (parts[2].substring(2).isBlank()) {
+                throw new DuckException("Oops, did you forget ending time?");
             } else {
-                String[] parts2 = parts1[1].concat(" ").split("/to");
-                if (parts2.length != 2 || parts2[1].isBlank()) {
-                    throw new DuckException("Oops, did you mess up ending time?");
-                } else if (parts2[0].isBlank()) {
-                    throw new DuckException("Oops, did you mess up starting time?");
-                } else {
-                    parts1[0] = parts1[0].strip();
-                    parts2[0] = parts2[0].strip();
-                    parts2[1] = parts2[1].strip();
-                    EventTask event = new EventTask(parts1[0], parts2[0], parts2[1]);
+                parts[0] = parts[0].strip();
+                parts[1] = parts[1].substring(4).strip();
+                parts[2] = parts[2].substring(2).strip();
+                try {
+                    LocalDate from = LocalDate.parse(parts[1]);
+                    LocalDate to = LocalDate.parse(parts[2]);
+                    EventTask event = new EventTask(parts[0], parts[1], parts[2]);
                     tasks.addTask(event);
+                } catch (DateTimeParseException e) {
+                    throw new DuckException("Wrong date format:\n" + e.getMessage());
                 }
             }
         } else {
@@ -197,7 +217,7 @@ public class Duck {
         }
 
         System.out.println(HLINE + "\nHello! I'm\n" + DUCK +
-                            "\nWhat can I do for you?\n" + HLINE);
+                "\nWhat can I do for you?\n(btw, plz specify time in yyyy-mm-dd)\n" + HLINE);
 
         while (true) {
             String next = sc.nextLine();

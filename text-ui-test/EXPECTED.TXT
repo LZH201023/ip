@@ -6,6 +6,7 @@ Hello! I'm
 | |_| | |_| | |__| |\ \
 |____/ \__,_|____|_| \_\
 What can I do for you?
+(btw, plz specify time in yyyy-mm-dd)
 --------------------------------------------------
 --------------------------------------------------
 Sorry I can't understand...
@@ -17,12 +18,12 @@ Now you have 1 tasks in the list
 --------------------------------------------------
 --------------------------------------------------
 Got it. I've added this task:
-[D][ ] something (by: 13th Jan)
+[D][ ] something (by: Jan 12 2025)
 Now you have 2 tasks in the list
 --------------------------------------------------
 --------------------------------------------------
 Got it. I've added this task:
-[E][ ] other (from: 6:30 Today to: next year)
+[E][ ] other (from: Jan 20 2025 to: Jan 22 2025)
 Now you have 3 tasks in the list
 --------------------------------------------------
 --------------------------------------------------
@@ -31,7 +32,7 @@ Nice! I've marked this task as done:
 --------------------------------------------------
 --------------------------------------------------
 Ok, I've marked this task as not done yet:
-[D][ ] something (by: 13th Jan)
+[D][ ] something (by: Jan 12 2025)
 --------------------------------------------------
 --------------------------------------------------
 Oh no, please mark a proper task!
@@ -48,20 +49,20 @@ Oh no, please unmark a proper task!
 --------------------------------------------------
 Here are the tasks in your list:
 1.[T][X] mark me
-2.[D][ ] something (by: 13th Jan)
-3.[E][ ] other (from: 6:30 Today to: next year)
---------------------------------------------------
---------------------------------------------------
-Missing deadline description!
+2.[D][ ] something (by: Jan 12 2025)
+3.[E][ ] other (from: Jan 20 2025 to: Jan 22 2025)
 --------------------------------------------------
 --------------------------------------------------
 Missing deadline!
 --------------------------------------------------
 --------------------------------------------------
-Wrong command format.
+Did you forget to specify deadline?
 --------------------------------------------------
 --------------------------------------------------
-Oops, did you mess up starting time?
+Missing deadline!
+--------------------------------------------------
+--------------------------------------------------
+Oops, did you forget starting time?
 --------------------------------------------------
 --------------------------------------------------
 Missing todo description!
@@ -70,10 +71,10 @@ Missing todo description!
 Missing event description!
 --------------------------------------------------
 --------------------------------------------------
-Oops, did you mess up ending time?
+Please specify a proper timing for event.
 --------------------------------------------------
 --------------------------------------------------
-Oops, did you mess up ending time?
+Wrong command format.
 --------------------------------------------------
 --------------------------------------------------
 Sorry I can't understand...
@@ -90,11 +91,11 @@ Task index out of bound.
 --------------------------------------------------
 --------------------------------------------------
 Noted. I've removed this task:
-[E][ ] other (from: 6:30 Today to: next year)
+[E][ ] other (from: Jan 20 2025 to: Jan 22 2025)
 --------------------------------------------------
 --------------------------------------------------
 Noted. I've removed this task:
-[D][ ] something (by: 13th Jan)
+[D][ ] something (by: Jan 12 2025)
 --------------------------------------------------
 --------------------------------------------------
 Here are the tasks in your list:
