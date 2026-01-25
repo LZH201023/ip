@@ -7,6 +7,8 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public abstract String toCompactString();
+
     public void markAsDone() {
         this.isDone = true;
     }

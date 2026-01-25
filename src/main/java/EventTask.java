@@ -9,6 +9,11 @@ public class EventTask extends Task {
     }
 
     @Override
+    public String toCompactString() {
+        return "E" + (this.isDone ? "1" : "0") + this.description +
+                "/" + this.startTime + "/" + this.endTime;
+    }
+    @Override
     public String toString() {
         return "[E][" + (this.isDone ? "X" : " ") + "] " + this.description +
                 " (from: " + startTime + " to: " + endTime + ")";
