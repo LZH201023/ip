@@ -1,7 +1,7 @@
 hello
 todo mark me
-deadline   something /by 13th Jan
-event other/from 6:30 Today  /to next year
+deadline   something /by 2025-01-12
+event other/from 2025-01-20  /to 2025-01-22
   mark 001
 unmark 2
 mark happy
@@ -12,11 +12,11 @@ list
   deadline
 deadline party/by
 deadline party
-event 8 /from /to 8
+event test /from /to 2020-12-09
 todo
- event /from 5 /to 0
-event another_party /from 6
-event another_party /from 6 /to 9/to
+ event /from 2020-09-01 /to 2019-01-02
+event another_party /from 2023-03-03
+event another_party /from 2023-04-05 /to 2024-05-06/to
 list all
 delete
 delete 1

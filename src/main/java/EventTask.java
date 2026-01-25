@@ -1,11 +1,21 @@
-public class EventTask extends Task {
-    protected String startTime;
-    protected String endTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
-    public EventTask(String description, String from, String to) {
+public class EventTask extends Task {
+    protected LocalDate startTime;
+    protected LocalDate endTime;
+
+    public EventTask(String description, LocalDate from, LocalDate to) {
         super(description);
         this.startTime = from;
         this.endTime = to;
+    }
+
+    public EventTask(String description, String from, String to) throws DateTimeParseException {
+        super(description);
+        this.startTime = LocalDate.parse(from);
+        this.endTime = LocalDate.parse(to);
     }
 
     @Override
@@ -16,6 +26,7 @@ public class EventTask extends Task {
     @Override
     public String toString() {
         return "[E][" + (this.isDone ? "X" : " ") + "] " + this.description +
-                " (from: " + startTime + " to: " + endTime + ")";
+                " (from: " + startTime.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + " to: " +
+                endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
     }
 }

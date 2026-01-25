@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
@@ -69,7 +70,11 @@ public class TaskList {
                 if (texts.length != 2) {
                     throw new DuckException();
                 } else {
-                    this.addTask(new DeadlineTask(texts[0].strip(), texts[1].strip()));
+                    try {
+                        this.addTask(new DeadlineTask(texts[0].strip(), texts[1].strip()));
+                    } catch (DateTimeParseException e) {
+                        throw new DuckException();
+                    }
                 }
 
             } else if (c1 == 'E') {
@@ -77,7 +82,11 @@ public class TaskList {
                 if (texts.length != 3) {
                     throw new DuckException();
                 } else {
-                    this.addTask(new EventTask(texts[0].strip(), texts[1].strip(), texts[2].strip()));
+                    try {
+                        this.addTask(new EventTask(texts[0].strip(), texts[1].strip(), texts[2].strip()));
+                    } catch (DateTimeParseException e) {
+                        throw new DuckException();
+                    }
                 }
 
             } else {
