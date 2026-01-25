@@ -1,4 +1,10 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.io.File;
+import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class TaskList {
     private final ArrayList<Task> list;
@@ -31,6 +37,68 @@ public class TaskList {
         Task temp = this.list.get(idx);
         this.list.remove(idx);
         return temp;
+    }
+
+    public void clearAll() {
+        this.list.clear();
+    }
+    public void loadFrom(File f) throws FileNotFoundException, DuckException {
+        Scanner sc = new Scanner(f);
+        while (sc.hasNext()) {
+            String next = sc.nextLine();
+            if (next.length() < 3) {
+                throw new DuckException();
+            }
+            char c1 = next.charAt(0);
+            char c2 = next.charAt(1);
+            if (!(c2 == '1') && !(c2 == '0')) {
+                throw new DuckException();
+            }
+            boolean isMarked = c2 == '1';
+
+            if (c1 == 'T') {
+                String description = next.substring(2).strip();
+                if (description.isEmpty()) {
+                    throw new DuckException();
+                } else {
+                    this.addTask(new TodoTask(description));
+                }
+
+            } else if (c1 == 'D') {
+                String[] texts = next.substring(2).concat(" ").split("/");
+                if (texts.length != 2) {
+                    throw new DuckException();
+                } else {
+                    this.addTask(new DeadlineTask(texts[0].strip(), texts[1].strip()));
+                }
+
+            } else if (c1 == 'E') {
+                String[] texts = next.substring(2).concat(" ").split("/");
+                if (texts.length != 3) {
+                    throw new DuckException();
+                } else {
+                    this.addTask(new EventTask(texts[0].strip(), texts[1].strip(), texts[2].strip()));
+                }
+
+            } else {
+                throw new DuckException();
+            }
+
+            if (isMarked) {
+                this.markTaskAt(this.getLength() - 1);
+            }
+        }
+
+        sc.close();
+    }
+
+    public void writeToDefaultFile() throws IOException {
+        ArrayList<String> items = new ArrayList<>(this.getLength());
+        for (int i = 0; i < this.getLength(); i++) {
+            items.add(this.getTask(i).toCompactString());
+        }
+
+        Files.write(Paths.get("./data/duck.txt"), items);
     }
 
     @Override

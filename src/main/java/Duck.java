@@ -1,4 +1,7 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.io.FileWriter;
 
 public class Duck {
     private static final TaskList tasks = new TaskList();
@@ -8,6 +11,22 @@ public class Duck {
             "| | | | | | | |  | /  /\n" +
             "| |_| | |_| | |__| |\\ \\\n" +
             "|____/ \\__,_|____|_| \\_\\";
+
+
+    private static void checkMemory() throws IOException {
+        File f = new File("./data/duck.txt");
+        boolean isCreated = f.createNewFile();
+        if (!isCreated) { // file already exists
+            try {
+                tasks.loadFrom(f);
+            } catch (DuckException e) {
+                FileWriter fw = new FileWriter(f);
+                fw.write("");
+                tasks.clearAll();
+                System.out.println("Memory corrupted, task list cleared");
+            }
+        }
+    }
 
     private static boolean isBye(String s) {
         if (s.length() != 3) {
@@ -19,7 +38,7 @@ public class Duck {
         return b1 && b2 && b3;
     }
 
-    private static void parseAndDelete(String s) throws DuckException {
+    private static void parseAndDelete(String s) throws IOException, DuckException {
         int num = 0;
         int idx = 0;
         while (idx < s.length() && Character.isDigit(s.charAt(idx))) {
@@ -45,9 +64,12 @@ public class Duck {
         } else {
             throw new DuckException("Task index out of bound.");
         }
+
+        // Update memory
+        tasks.writeToDefaultFile();
     }
 
-    private static void parseAndMark(String s) throws DuckException {
+    private static void parseAndMark(String s) throws IOException, DuckException {
         int num = 0;
         int idx = 0;
         while (idx < s.length() && Character.isDigit(s.charAt(idx))) {
@@ -73,9 +95,12 @@ public class Duck {
         } else {
             throw new DuckException("Task index out of bound.");
         }
+
+        // Update memory
+        tasks.writeToDefaultFile();
     }
 
-    private static void parseAndUnmark(String s) throws DuckException {
+    private static void parseAndUnmark(String s) throws IOException, DuckException {
         int num = 0;
         int idx = 0;
         while (idx < s.length() && Character.isDigit(s.charAt(idx))) {
@@ -101,9 +126,12 @@ public class Duck {
         } else {
             throw new DuckException("Task index out of bound.");
         }
+
+        // Update memory
+        tasks.writeToDefaultFile();
     }
 
-    private static void parseAndAdd(String s) throws DuckException {
+    private static void parseAndAdd(String s) throws IOException, DuckException {
         String task;
         if (s.startsWith("todo")) {
             task = s.substring(4).stripLeading();
@@ -154,12 +182,19 @@ public class Duck {
                 tasks.getTask(tasks.getLength() - 1) +
                 "\nNow you have " + tasks.getLength() + " tasks in the list\n" + HLINE);
 
+        // Update memory
+        tasks.writeToDefaultFile();
     }
 
     private enum COMMAND {LIST, MARK, UNMARK, DELETE, BYE, ADD};  //To be used in the future if required
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        try {
+            checkMemory();
+        } catch (IOException e) {
+            System.out.println("Memory setup unsuccessful, chatbot closing, bye!");
+        }
 
         System.out.println(HLINE + "\nHello! I'm\n" + DUCK +
                             "\nWhat can I do for you?\n" + HLINE);
@@ -176,18 +211,24 @@ public class Duck {
                     parseAndMark(command.substring(4).stripLeading());
                 } catch (DuckException e) {
                     System.out.println(HLINE + "\n" + e.getMessage() + "\n" + HLINE);
+                } catch (IOException e) {
+                    System.out.println("Memory update failure, your data could be lost\n" + HLINE);
                 }
             } else if (command.startsWith("unmark")) {
                 try {
                     parseAndUnmark(command.substring(6).stripLeading());
                 } catch (DuckException e) {
                     System.out.println(HLINE + "\n" + e.getMessage() + "\n" + HLINE);
+                } catch (IOException e) {
+                    System.out.println("Memory update failure, your data could be lost\n" + HLINE);
                 }
             } else if (command.startsWith("delete")) {
                 try {
                     parseAndDelete(command.substring(6).stripLeading());
                 } catch (DuckException e) {
                     System.out.println(HLINE + "\n" + e.getMessage() + "\n" + HLINE);
+                } catch (IOException e) {
+                    System.out.println("Memory update failure, your data could be lost\n" + HLINE);
                 }
             } else if (isBye(command)) {
                 System.out.println(HLINE + "\n" +
@@ -199,6 +240,8 @@ public class Duck {
                     parseAndAdd(command);
                 } catch (DuckException e) {
                     System.out.println(HLINE + "\n" + e.getMessage() + "\n" + HLINE);
+                } catch (IOException e) {
+                    System.out.println("Memory update failure, your data could be lost\n" + HLINE);
                 }
             }
         }
