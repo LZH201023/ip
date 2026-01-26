@@ -1,3 +1,15 @@
+package duck;
+
+import duck.command.Command;
+import duck.command.DeleteCommand;
+import duck.command.ListCommand;
+import duck.command.MarkCommand;
+import duck.command.UnmarkCommand;
+import duck.command.ExitCommand;
+import duck.command.AddCommand;
+import duck.task.DeadlineTask;
+import duck.task.EventTask;
+import duck.task.TodoTask;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -21,7 +33,7 @@ class Parser {
         if (num > 0) {
             return num;
         } else {
-            throw new DuckException("Task index out of bound.");
+            throw new DuckException("duck.task.Task index out of bound.");
         }
     }
 

@@ -1,6 +1,13 @@
-import java.io.IOException;
+package duck.command;
 
-class DeleteCommand extends Command {
+import java.io.IOException;
+import duck.task.Task;
+import duck.task.TaskList;
+import duck.Ui;
+import duck.Storage;
+import duck.DuckException;
+
+public class DeleteCommand extends Command {
 
     private final int index;
 

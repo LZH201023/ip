@@ -1,6 +1,12 @@
-import java.io.IOException;
+package duck.command;
 
-class UnmarkCommand extends Command {
+import java.io.IOException;
+import duck.task.TaskList;
+import duck.Ui;
+import duck.Storage;
+import duck.DuckException;
+
+public class UnmarkCommand extends Command {
 
     private final int index;
 

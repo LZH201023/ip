@@ -1,8 +1,15 @@
+package duck.command;
+
 import java.io.IOException;
+import duck.task.Task;
+import duck.task.TaskList;
+import duck.Ui;
+import duck.Storage;
+import duck.DuckException;
 
-class AddCommand extends Command {
+public class AddCommand extends Command {
 
-    private Task task;
+    private final Task task;
 
     public AddCommand(Task task) {
         this.task = task;

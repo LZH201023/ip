@@ -1,3 +1,9 @@
+package duck;
+
+import duck.task.DeadlineTask;
+import duck.task.EventTask;
+import duck.task.TaskList;
+import duck.task.TodoTask;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -6,7 +12,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Storage {
+public class Storage {
 
     private File file;
     private boolean hasMemoryCheckPassed;

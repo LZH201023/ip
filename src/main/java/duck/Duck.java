@@ -1,3 +1,8 @@
+package duck;
+
+import duck.command.Command;
+import duck.task.TaskList;
+
 public class Duck {
 
     private final Storage storage;

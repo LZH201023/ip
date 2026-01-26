@@ -1,6 +1,10 @@
+package duck;
+
+import duck.task.Task;
+import duck.task.TaskList;
 import java.util.Scanner;
 
-class Ui {
+public class Ui {
 
     private static final String HLINE = "-".repeat(50);
     private static final String DUCK = " ____        ____ _   __\n" +
