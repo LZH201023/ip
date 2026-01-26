@@ -3,6 +3,7 @@ package duck.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
 
 public class DeadlineTask extends Task {
     protected LocalDate deadline;
@@ -26,6 +27,6 @@ public class DeadlineTask extends Task {
     @Override
     public String toString() {
         return "[D][" + (this.isDone ? "X" : " ") + "] " + this.description +
-                " (by: " + this.deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
+                " (by: " + deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + ")";
     }
 }
