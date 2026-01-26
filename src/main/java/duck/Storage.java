@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -26,6 +27,10 @@ public class Storage {
 
     private void checkMemory() {
         try {
+            Path dir = Paths.get("data");
+            if (!Files.exists(dir)) {
+                Files.createDirectories(dir);
+            }
             this.isEmptyFile = file.createNewFile();
         } catch (IOException e) {
             this.hasMemoryCheckPassed = false;
