@@ -1,11 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.io.File;
-import java.util.Scanner;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class TaskList {
     private final ArrayList<Task> list;
@@ -38,19 +31,6 @@ public class TaskList {
         Task temp = this.list.get(idx);
         this.list.remove(idx);
         return temp;
-    }
-
-    public void clearAll() {
-        this.list.clear();
-    }
-
-    public void writeToDefaultFile() throws IOException {
-        ArrayList<String> items = new ArrayList<>(this.getLength());
-        for (int i = 0; i < this.getLength(); i++) {
-            items.add(this.getTask(i).toCompactString());
-        }
-
-        Files.write(Paths.get("./data/duck.txt"), items);
     }
 
     @Override

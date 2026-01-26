@@ -15,7 +15,7 @@ class AddCommand extends Command {
 
         // Update memory
         try {
-            tasks.writeToDefaultFile();
+            storage.write(tasks);
         } catch (IOException e) {
             throw new DuckException("Memory update failure:\n"  + e.getMessage() +
                     "\nYour data could be lost");

@@ -1,6 +1,9 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class Storage {
@@ -91,6 +94,15 @@ class Storage {
         } catch (IOException e) {
             throw new DuckException();
         }
+    }
+
+    public void write(TaskList tasks) throws IOException {
+        ArrayList<String> items = new ArrayList<>(tasks.getLength());
+        for (int i = 0; i < tasks.getLength(); i++) {
+            items.add(tasks.getTask(i).toCompactString());
+        }
+
+        Files.write(Paths.get("./data/duck.txt"), items);
     }
 
 }
