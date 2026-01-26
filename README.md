@@ -1,6 +1,6 @@
 # Duck project template
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+This is a project template for a greenfield Java project. It's named after the cute creature _Duck_. Given below are instructions on how to use it.
 
 ## Setting up in Intellij
 

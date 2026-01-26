@@ -35,16 +35,16 @@ Ok, I've marked this task as not done yet:
 [D][ ] something (by: Jan 12 2025)
 --------------------------------------------------
 --------------------------------------------------
-Oh no, please mark a proper task!
+Oh no, please specify a proper task!
 --------------------------------------------------
 --------------------------------------------------
 Task index out of bound.
 --------------------------------------------------
 --------------------------------------------------
-Oh no, please unmark a proper task!
+Oh no, please specify a proper task!
 --------------------------------------------------
 --------------------------------------------------
-Oh no, please unmark a proper task!
+Oh no, please specify a proper task!
 --------------------------------------------------
 --------------------------------------------------
 Here are the tasks in your list:
@@ -80,7 +80,7 @@ Wrong command format.
 Sorry I can't understand...
 --------------------------------------------------
 --------------------------------------------------
-Oh no, please delete a proper task!
+Oh no, please specify a proper task!
 --------------------------------------------------
 --------------------------------------------------
 Noted. I've removed this task:
