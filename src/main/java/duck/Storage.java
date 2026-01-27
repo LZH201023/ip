@@ -13,18 +13,33 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Manages loading and saving task data to a local file.
+ * This class creates the data directory if it does not exist and initializes the storage file.
+ */
 public class Storage {
 
     private File file;
     private boolean hasMemoryCheckPassed;
     private boolean isEmptyFile;
 
+    /**
+     * Constructs a {@code Storage} instance using the specified file path.
+     * This constructor initializes the file reference and checks storage availability.
+     *
+     * @param filePath The file path used to store and load task data.
+     */
     public Storage(String filePath) {
         this.file = new File(filePath);
         this.hasMemoryCheckPassed = true;
         checkMemory();
     }
 
+    /**
+     * Checks whether the storage directory and file can be created or accessed.
+     * This method creates the {@code data} directory if it does not exist.
+     * This method also creates the storage file if it does not already exist.
+     */
     private void checkMemory() {
         try {
             Path dir = Paths.get("data");
@@ -37,10 +52,23 @@ public class Storage {
         }
     }
 
+    /**
+     * Returns whether storage initialization was successful.
+     *
+     * @return {@code true} if storage initialization succeeded. Otherwise, {@code false}.
+     */
     public boolean getStatus() {
         return hasMemoryCheckPassed;
     }
 
+    /**
+     * Loads tasks from the storage file and returns them as a {@link TaskList}.
+     * This method returns an empty task list if the storage file was newly created.
+     * This method throws {@link DuckException} if the file contents are malformed or cannot be read.
+     *
+     * @return A {@link TaskList} containing tasks loaded from storage.
+     * @throws DuckException If the storage data is invalid or if an I/O error occurs.
+     */
     public TaskList load() throws DuckException {
         if (this.isEmptyFile) {
             return new TaskList();
@@ -107,6 +135,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Writes the given task list to the storage file.
+     * Each task is written in a compact format suitable for later loading.
+     *
+     * @param tasks The task list to be written to storage.
+     * @throws IOException If an I/O error occurs while writing to the file.
+     */
     public void write(TaskList tasks) throws IOException {
         ArrayList<String> items = new ArrayList<>(tasks.getLength());
         for (int i = 0; i < tasks.getLength(); i++) {

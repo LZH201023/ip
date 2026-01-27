@@ -4,8 +4,19 @@ import duck.task.TaskList;
 import duck.Ui;
 import duck.Storage;
 
+/**
+ * Represents a command that displays all tasks in the task list.
+ * This command outputs the current list of tasks to the user.
+ */
 public class ListCommand extends Command {
 
+    /**
+     * Executes this command by displaying the task list to the user.
+     *
+     * @param tasks The task list whose contents will be displayed.
+     * @param ui The user interface used to display messages.
+     * @param storage The storage used to manage task data.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.showList(tasks);
