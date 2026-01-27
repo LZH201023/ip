@@ -13,8 +13,20 @@ import duck.task.TodoTask;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Parses user input strings into executable {@link Command} objects.
+ * This class validates command formats and throws {@link DuckException} for invalid inputs.
+ */
 class Parser {
 
+    /**
+     * Parses a one-based task index from the given string.
+     * This method accepts only strings containing digits and rejects non-positive values.
+     *
+     * @param s The string containing the task index.
+     * @return The parsed one-based task index.
+     * @throws DuckException If the input contains non-digit characters or if the index is not positive.
+     */
     private static int parseIndex(String s) throws DuckException {
         int num = 0;
         int idx = 0;
@@ -37,6 +49,13 @@ class Parser {
         }
     }
 
+    /**
+     * Checks whether the given string represents the exit command.
+     * This check is case-insensitive and matches only the word "bye".
+     *
+     * @param s The input string to be checked.
+     * @return {@code true} if the input equals "bye" ignoring case. Otherwise, {@code false}.
+     */
     private static boolean isBye(String s) {
         if (s.length() != 3) {
             return false;
@@ -47,6 +66,14 @@ class Parser {
         return b1 && b2 && b3;
     }
 
+    /**
+     * Parses the given raw user input into a corresponding {@link Command}.
+     * This method trims surrounding whitespace and determines the command type based on prefixes and keywords.
+     *
+     * @param nextInput The raw input string entered by the user.
+     * @return A {@link Command} instance representing the user instruction.
+     * @throws DuckException If the input does not match any valid command format.
+     */
     public static Command parse(String nextInput) throws DuckException {
         String cmd = nextInput.strip();
         if (cmd.equals("list")) {
