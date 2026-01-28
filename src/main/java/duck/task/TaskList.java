@@ -75,6 +75,22 @@ public class TaskList {
     }
 
     /**
+     * Returns a list of tasks with matching keyword.
+     *
+     * @param keyword The keyword to find tasks.
+     * @return A <code>TaskList</code> of matching tasks.
+     */
+    public TaskList findAllMatch(String keyword) {
+        TaskList sublist = new TaskList();
+        for (Task task : this.list) {
+            if (task.getDescription().contains(keyword)) {
+                sublist.addTask(task);
+            }
+        }
+        return sublist;
+    }
+
+    /**
      * Returns a string representation of this task list.
      * Each task is displayed on a new line and numbered starting from 1.
      *

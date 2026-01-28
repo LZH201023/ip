@@ -3,6 +3,7 @@ package duck.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
 
 /**
  * Represents a <code>Task</code> with a duration specified by
@@ -62,8 +63,8 @@ public class EventTask extends Task {
     @Override
     public String toString() {
         return "[E][" + (this.isDone ? "X" : " ") + "] " + this.description +
-                " (from: " + startTime.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + " to: " +
-                endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
+                " (from: " + startTime.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + " to: " +
+                endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + ")";
     }
 
 }

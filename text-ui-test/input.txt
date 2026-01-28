@@ -22,6 +22,8 @@ delete
 delete 1
 delete 10
 delete 2
+find thing
 delete   1
+find thing
 list
 BYE
