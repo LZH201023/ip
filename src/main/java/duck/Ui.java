@@ -1,8 +1,9 @@
 package duck;
 
+import java.util.Scanner;
+
 import duck.task.Task;
 import duck.task.TaskList;
-import java.util.Scanner;
 
 /**
  * Handles all user interaction for the Duck application.
