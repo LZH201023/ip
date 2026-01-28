@@ -3,13 +3,14 @@ package duck;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+import duck.command.AddCommand;
+import duck.command.FindCommand;
 import duck.command.Command;
+import duck.command.ExitCommand;
 import duck.command.DeleteCommand;
 import duck.command.ListCommand;
-import duck.command.MarkCommand;
 import duck.command.UnmarkCommand;
-import duck.command.ExitCommand;
-import duck.command.AddCommand;
+import duck.command.MarkCommand;
 
 import duck.task.DeadlineTask;
 import duck.task.EventTask;
@@ -148,6 +149,9 @@ class Parser {
                     throw new DuckException("Wrong date format:\n" + e.getMessage());
                 }
             }
+        } else if (cmd.startsWith("find")) {
+            String keyword = cmd.substring(4).strip();
+            return new FindCommand(keyword);
         } else {
             // Command cannot be identified
             throw new DuckException("Sorry I can't understand...");

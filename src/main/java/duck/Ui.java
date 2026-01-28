@@ -131,6 +131,19 @@ public class Ui {
     }
 
     /**
+     * Displays the matching tasks on screen.
+     *
+     * @param sublist The list of tasks to be displayed.
+     */
+    public void displayFindResult(TaskList sublist) {
+        if (sublist.getLength() == 0) {
+            System.out.println("No matching task found!");
+        } else {
+            System.out.println("Here are the found tasks:\n" + sublist);
+        }
+    }
+
+    /**
      * Closes the input scanner and releases associated resources.
      */
     public void closeScanner() {

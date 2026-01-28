@@ -5,11 +5,12 @@ package duck.task;
  * and has a status of whether it has been done.
  */
 public abstract class Task {
+
     protected String description;
     protected boolean isDone;
 
     /**
-     * Construct a new <code>Task</code> object, by default it is not done yet.
+     * Constructs a new <code>Task</code> object, by default it is not done yet.
      *
      * @param description Name of task.
      */
@@ -19,7 +20,16 @@ public abstract class Task {
     }
 
     /**
-     * Convert <code>Task</code> object into compact string,
+     * Returns the <code>description</code> of this task.
+     *
+     * @return Task description.
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
+     * Converts <code>Task</code> object into compact string,
      * which is to be stored through a <code>Storage</code> object.
      *
      * @return Compact string representation.
@@ -27,14 +37,14 @@ public abstract class Task {
     public abstract String toCompactString();
 
     /**
-     * Mark the task as been done.
+     * Marks the task as been done.
      */
     public void markAsDone() {
         this.isDone = true;
     }
 
     /**
-     * Set the task to be not done yet.
+     * Sets the task to be not done yet.
      */
     public void markAsUndone() {
         this.isDone = false;

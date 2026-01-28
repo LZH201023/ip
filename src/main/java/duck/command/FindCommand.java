@@ -1,0 +1,37 @@
+package duck.command;
+
+import duck.Storage;
+import duck.Ui;
+import duck.task.TaskList;
+
+/**
+ * Represents a command that finds tasks by keyword.
+ * This command displays all tasks that contain <code>keyword</code>.
+ */
+public class FindCommand extends Command {
+
+    private final String keyword;
+
+    /**
+     * Constructs a new <code>FindCommand</code>.
+     *
+     * @param keyword The keyword to be matched.
+     */
+    public FindCommand(String keyword) {
+        this.keyword = keyword;
+    }
+
+    /**
+     * Executes this command by finding matching tasks in the task list.
+     *
+     * @param tasks The task list used by the application.
+     * @param ui The user interface used to display messages.
+     * @param storage The storage used to manage task data.
+     */
+    @Override
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
+        TaskList sublist = tasks.findAllMatch(keyword);
+        ui.displayFindResult(sublist);
+    }
+
+}
