@@ -1,5 +1,8 @@
 package duck;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 import duck.command.Command;
 import duck.command.DeleteCommand;
 import duck.command.ListCommand;
@@ -7,11 +10,10 @@ import duck.command.MarkCommand;
 import duck.command.UnmarkCommand;
 import duck.command.ExitCommand;
 import duck.command.AddCommand;
+
 import duck.task.DeadlineTask;
 import duck.task.EventTask;
 import duck.task.TodoTask;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 /**
  * Parses user input strings into executable {@link Command} objects.
@@ -147,6 +149,7 @@ class Parser {
                 }
             }
         } else {
+            // Command cannot be identified
             throw new DuckException("Sorry I can't understand...");
         }
     }
