@@ -28,12 +28,13 @@ public class Ui {
     }
 
     /**
-     * Displays the greeting message and application logo.
+     * Gets the greeting message and application logo.
      * This method also provides brief instructions to the user.
+     * @return Greeting message.
      */
-    public void greet() {
-        System.out.println(HLINE + "\nHello! I'm\n" + DUCK +
-                "\nWhat can I do for you?\n(btw, plz specify time in yyyy-mm-dd)\n" + HLINE);
+    public String getGreetMessage() {
+        return HLINE + "\nHello! I'm\n" + DUCK +
+                "\nWhat can I do for you?\n(btw, plz specify time in yyyy-mm-dd)\n" + HLINE;
     }
 
     /**
@@ -57,8 +58,8 @@ public class Ui {
      *
      * @param task The task that was marked as done.
      */
-    public void showMark(Task task) {
-        System.out.println("Nice! I've marked this task as done:\n" + task);
+    public String getMarkMessage(Task task) {
+        return "Nice! I've marked this task as done:\n" + task;
     }
 
     /**
@@ -66,8 +67,8 @@ public class Ui {
      *
      * @param task The task that was unmarked.
      */
-    public void showUnmark(Task task) {
-        System.out.println("Ok, I've marked this task as not done yet:\n" + task);
+    public String getUnmarkMessage(Task task) {
+        return "Ok, I've marked this task as not done yet:\n" + task;
     }
 
     /**
@@ -75,8 +76,8 @@ public class Ui {
      *
      * @param task The task that was removed.
      */
-    public void showDelete(Task task) {
-        System.out.println("Noted. I've removed this task:\n" + task);
+    public String getDeleteMessage(Task task) {
+        return "Noted. I've removed this task:\n" + task;
     }
 
     /**
@@ -85,9 +86,9 @@ public class Ui {
      * @param task The task that was added.
      * @param len The updated number of tasks in the list.
      */
-    public void showAdd(Task task, int len) {
-        System.out.println("Got it. I've added this task:\n" + task +
-                "\nNow you have " + len + " tasks in the list");
+    public String getAddMessage(Task task, int len) {
+        return "Got it. I've added this task:\n" + task +
+                "\nNow you have " + len + " tasks in the list";
     }
 
     /**
@@ -95,15 +96,15 @@ public class Ui {
      *
      * @param tasks The task list to be displayed.
      */
-    public void showList(TaskList tasks) {
-        System.out.println("Here are the tasks in your list:\n" + tasks);
+    public String getListMessage(TaskList tasks) {
+        return "Here are the tasks in your list:\n" + tasks;
     }
 
     /**
      * Displays the exit message when the application terminates.
      */
-    public void showExitMessage() {
-        System.out.println("Bye. Hope to see you again soon!");
+    public String getExitMessage() {
+        return "Bye. Hope to see you again soon!";
     }
 
     /**
@@ -111,23 +112,23 @@ public class Ui {
      *
      * @param errorMessage The error message to be displayed.
      */
-    public void showError(String errorMessage) {
-        System.out.println(errorMessage);
+    public String getErrorMessage(String errorMessage) {
+        return errorMessage;
     }
 
     /**
      * Displays a message indicating that application startup was unsuccessful.
      */
-    public void showUnsuccessfulStarting() {
-        System.out.println("Memory setup unsuccessful, chatbot closing, bye!");
+    public String getUnsuccessfulStartingMessage() {
+        return "Memory setup unsuccessful, chatbot closing, bye!";
     }
 
 
     /**
      * Displays a message indicating that stored data could not be loaded.
      */
-    public void showLoadingError() {
-        System.out.println("Memory corrupted, task list cleared.");
+    public String getLoadingErrorMessage() {
+        return "Memory corrupted, task list cleared.";
     }
 
     /**
@@ -135,11 +136,11 @@ public class Ui {
      *
      * @param sublist The list of tasks to be displayed.
      */
-    public void displayFindResult(TaskList sublist) {
+    public String getFindResultMessage(TaskList sublist) {
         if (sublist.getLength() == 0) {
-            System.out.println("No matching task found!");
+            return "No matching task found!";
         } else {
-            System.out.println("Here are the found tasks:\n" + sublist);
+            return "Here are the found tasks:\n" + sublist;
         }
     }
 

@@ -26,10 +26,10 @@ public class UnmarkCommand extends Command {
 
     /**
      * Executes this command by marking the specified task as not completed.
-     * Displays a confirmation message and updates stored data.
+     * Receives a confirmation message and updates stored data.
      *
      * @param tasks The task list containing the task to be unmarked.
-     * @param ui The user interface used to display messages.
+     * @param ui The user interface used to get messages.
      * @param storage The storage used to persist task data.
      * @throws DuckException If the task index is invalid or if an error occurs while updating storage.
      */
@@ -38,7 +38,7 @@ public class UnmarkCommand extends Command {
 
         if (index > 0 && index <= tasks.getLength()) {
             tasks.unmarkTaskAt(index - 1);
-            ui.showUnmark(tasks.getTask(index - 1));
+            this.message = ui.getUnmarkMessage(tasks.getTask(index - 1));
         } else {
             throw new DuckException("Task index out of bound.");
         }

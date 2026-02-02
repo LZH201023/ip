@@ -26,10 +26,10 @@ public class MarkCommand extends Command {
 
     /**
      * Executes this command by marking the specified task as completed.
-     * Displays a confirmation message and updates stored data.
+     * Receives a confirmation message and updates stored data.
      *
      * @param tasks The task list containing the task to be marked.
-     * @param ui The user interface used to display messages.
+     * @param ui The user interface used to get messages.
      * @param storage The storage used to persist task data.
      * @throws DuckException If the task index is invalid or if an error occurs while updating storage.
      */
@@ -38,7 +38,7 @@ public class MarkCommand extends Command {
 
         if (index > 0 && index <= tasks.getLength()) {
             tasks.markTaskAt(index - 1);
-            ui.showMark(tasks.getTask(index - 1));
+            this.message = ui.getMarkMessage(tasks.getTask(index - 1));
         } else {
             throw new DuckException("Task index out of bound.");
         }

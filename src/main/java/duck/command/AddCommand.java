@@ -30,14 +30,14 @@ public class AddCommand extends Command {
      * Displays a confirmation message to the user and updates stored data.
      *
      * @param tasks The task list to which the task will be added.
-     * @param ui The user interface used to display messages.
+     * @param ui The user interface used to get messages.
      * @param storage The storage used to persist task data.
      * @throws DuckException If an error occurs while updating persistent storage.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DuckException {
         tasks.addTask(this.task);
-        ui.showAdd(this.task, tasks.getLength());
+        this.message = ui.getAddMessage(this.task, tasks.getLength());
 
         // Update memory
         try {

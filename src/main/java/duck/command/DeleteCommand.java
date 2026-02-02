@@ -30,7 +30,7 @@ public class DeleteCommand extends Command {
      * Displays a confirmation message to the user and updates stored data.
      *
      * @param tasks The task list from which the task will be deleted.
-     * @param ui The user interface used to display messages.
+     * @param ui The user interface used to get messages.
      * @param storage The storage used to persist task data.
      * @throws DuckException If the task index is invalid or if an error occurs while updating storage.
      */
@@ -39,7 +39,7 @@ public class DeleteCommand extends Command {
 
         if (index > 0 && index <= tasks.getLength()) {
             Task task = tasks.deleteTaskAt(index - 1);
-            ui.showDelete(task);
+            this.message = ui.getDeleteMessage(task);
         } else {
             throw new DuckException("Task index out of bound.");
         }

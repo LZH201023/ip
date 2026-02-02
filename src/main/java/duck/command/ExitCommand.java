@@ -14,12 +14,12 @@ public class ExitCommand extends Command {
      * Executes this command by displaying the exit message and closing the scanner.
      *
      * @param tasks The task list used by the application.
-     * @param ui The user interface used to display messages.
+     * @param ui The user interface used to get messages.
      * @param storage The storage used to manage task data.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.showExitMessage();
+        this.message = ui.getExitMessage();
         ui.closeScanner();
     }
 

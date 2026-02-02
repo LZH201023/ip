@@ -1,3 +1,5 @@
+package duck;
+
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -11,8 +13,13 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Duke duke = new Duke();
+    private Duck duck = new Duck("data/duck.txt");
 
+    /**
+     * Starts GUI and sets up FXML.
+     *
+     * @param stage <code>Stage</code> object to construct GUI.
+     */
     @Override
     public void start(Stage stage) {
         try {
@@ -23,7 +30,7 @@ public class Main extends Application {
 
             stage.setMinHeight(220);
             stage.setMinWidth(417);
-            fxmlLoader.<MainWindow>getController().setDuke(duke);  // inject the Duke instance
+            fxmlLoader.<MainWindow>getController().setDuck(duck);  // inject the Duke instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
