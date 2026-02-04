@@ -40,7 +40,7 @@ public class TaskList {
      *
      * @param task The task to be added.
      */
-    public void addTask(Task task){
+    public void addTask(Task task) {
         this.list.add(task);
     }
 

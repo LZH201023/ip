@@ -12,11 +12,11 @@ import duck.task.TaskList;
 public class Ui {
 
     private static final String HLINE = "-".repeat(50);
-    private static final String DUCK = " ____        ____ _   __\n" +
-            "|  _ \\ _   _|  __| | / /\n" +
-            "| | | | | | | |  | /  /\n" +
-            "| |_| | |_| | |__| |\\ \\\n" +
-            "|____/ \\__,_|____|_| \\_\\";
+    private static final String DUCK = " ____        ____ _   __\n"
+            + "|  _ \\ _   _|  __| | / /\n"
+            + "| | | | | | | |  | /  /\n"
+            + "| |_| | |_| | |__| |\\ \\\n"
+            + "|____/ \\__,_|____|_| \\_\\";
 
     private Scanner sc;
 
@@ -33,8 +33,8 @@ public class Ui {
      * @return Greeting message.
      */
     public String getGreetMessage() {
-        return HLINE + "\nHello! I'm\n" + DUCK +
-                "\nWhat can I do for you?\n(btw, plz specify time in yyyy-mm-dd)\n" + HLINE;
+        return HLINE + "\nHello! I'm\n" + DUCK
+                + "\nWhat can I do for you?\n(btw, plz specify time in yyyy-mm-dd)\n" + HLINE;
     }
 
     /**
@@ -87,8 +87,8 @@ public class Ui {
      * @param len The updated number of tasks in the list.
      */
     public String getAddMessage(Task task, int len) {
-        return "Got it. I've added this task:\n" + task +
-                "\nNow you have " + len + " tasks in the list";
+        return "Got it. I've added this task:\n" + task
+                + "\nNow you have " + len + " tasks in the list";
     }
 
     /**

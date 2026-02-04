@@ -2,11 +2,11 @@ package duck.command;
 
 import java.io.IOException;
 
+import duck.DuckException;
+import duck.Storage;
+import duck.Ui;
 import duck.task.Task;
 import duck.task.TaskList;
-import duck.Ui;
-import duck.Storage;
-import duck.DuckException;
 
 /**
  * Represents a command that deletes a task from the task list.
@@ -48,8 +48,8 @@ public class DeleteCommand extends Command {
         try {
             storage.write(tasks);
         } catch (IOException e) {
-            throw new DuckException("Memory update failure:\n"  + e.getMessage() +
-                    "\nYour data could be lost");
+            throw new DuckException("Memory update failure:\n" + e.getMessage()
+                    + "\nYour data could be lost");
         }
     }
 

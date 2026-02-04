@@ -1,8 +1,8 @@
 package duck.command;
 
-import duck.task.TaskList;
-import duck.Ui;
 import duck.Storage;
+import duck.Ui;
+import duck.task.TaskList;
 
 /**
  * Represents a command that terminates the application.

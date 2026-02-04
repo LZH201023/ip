@@ -35,7 +35,7 @@ public class EventTask extends Task {
      * @param from Starting time of task.
      * @param to Ending time of task.
      * @throws DateTimeParseException If <code>from</code> or
-     * <code>to</code> cannot be parsed into a valid date.
+     *                                <code>to</code> cannot be parsed into a valid date.
      */
     public EventTask(String description, String from, String to) throws DateTimeParseException {
         super(description);
@@ -51,8 +51,8 @@ public class EventTask extends Task {
      */
     @Override
     public String toCompactString() {
-        return "E" + (this.isDone ? "1" : "0") + this.description +
-                "/" + this.startTime + "/" + this.endTime;
+        return "E" + (this.isDone ? "1" : "0") + this.description
+                + "/" + this.startTime + "/" + this.endTime;
     }
 
     /**
@@ -62,9 +62,9 @@ public class EventTask extends Task {
      */
     @Override
     public String toString() {
-        return "[E][" + (this.isDone ? "X" : " ") + "] " + this.description +
-                " (from: " + startTime.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + " to: " +
-                endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + ")";
+        return "[E][" + (this.isDone ? "X" : " ") + "] " + this.description
+                + " (from: " + startTime.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + " to: "
+                + endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + ")";
     }
 
 }

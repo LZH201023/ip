@@ -2,10 +2,10 @@ package duck.command;
 
 import java.io.IOException;
 
-import duck.task.TaskList;
-import duck.Ui;
-import duck.Storage;
 import duck.DuckException;
+import duck.Storage;
+import duck.Ui;
+import duck.task.TaskList;
 
 /**
  * Represents a command that marks a task in the task list as not completed.
@@ -47,8 +47,8 @@ public class UnmarkCommand extends Command {
         try {
             storage.write(tasks);
         } catch (IOException e) {
-            throw new DuckException("Memory update failure:\n"  + e.getMessage() +
-                    "\nYour data could be lost");
+            throw new DuckException("Memory update failure:\n" + e.getMessage()
+                    + "\nYour data could be lost");
         }
     }
 
