@@ -2,11 +2,11 @@ package duck.command;
 
 import java.io.IOException;
 
+import duck.DuckException;
+import duck.Storage;
+import duck.Ui;
 import duck.task.Task;
 import duck.task.TaskList;
-import duck.Ui;
-import duck.Storage;
-import duck.DuckException;
 
 /**
  * Represents a command that deletes a task from the task list.
@@ -30,7 +30,7 @@ public class DeleteCommand extends Command {
      * Displays a confirmation message to the user and updates stored data.
      *
      * @param tasks The task list from which the task will be deleted.
-     * @param ui The user interface used to display messages.
+     * @param ui The user interface used to get messages.
      * @param storage The storage used to persist task data.
      * @throws DuckException If the task index is invalid or if an error occurs while updating storage.
      */
@@ -39,7 +39,7 @@ public class DeleteCommand extends Command {
 
         if (index > 0 && index <= tasks.getLength()) {
             Task task = tasks.deleteTaskAt(index - 1);
-            ui.showDelete(task);
+            this.message = ui.getDeleteMessage(task);
         } else {
             throw new DuckException("Task index out of bound.");
         }
@@ -48,8 +48,8 @@ public class DeleteCommand extends Command {
         try {
             storage.write(tasks);
         } catch (IOException e) {
-            throw new DuckException("Memory update failure:\n"  + e.getMessage() +
-                    "\nYour data could be lost");
+            throw new DuckException("Memory update failure:\n" + e.getMessage()
+                    + "\nYour data could be lost");
         }
     }
 

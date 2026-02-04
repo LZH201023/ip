@@ -2,11 +2,11 @@ package duck.command;
 
 import java.io.IOException;
 
+import duck.DuckException;
+import duck.Storage;
+import duck.Ui;
 import duck.task.Task;
 import duck.task.TaskList;
-import duck.Ui;
-import duck.Storage;
-import duck.DuckException;
 
 /**
  * Represents a command that adds a task to the task list.
@@ -30,21 +30,21 @@ public class AddCommand extends Command {
      * Displays a confirmation message to the user and updates stored data.
      *
      * @param tasks The task list to which the task will be added.
-     * @param ui The user interface used to display messages.
+     * @param ui The user interface used to get messages.
      * @param storage The storage used to persist task data.
      * @throws DuckException If an error occurs while updating persistent storage.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DuckException {
         tasks.addTask(this.task);
-        ui.showAdd(this.task, tasks.getLength());
+        this.message = ui.getAddMessage(this.task, tasks.getLength());
 
         // Update memory
         try {
             storage.write(tasks);
         } catch (IOException e) {
-            throw new DuckException("Memory update failure:\n"  + e.getMessage() +
-                    "\nYour data could be lost");
+            throw new DuckException("Memory update failure:\n" + e.getMessage()
+                    + "\nYour data could be lost");
         }
     }
 }

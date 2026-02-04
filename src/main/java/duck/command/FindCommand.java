@@ -25,13 +25,13 @@ public class FindCommand extends Command {
      * Executes this command by finding matching tasks in the task list.
      *
      * @param tasks The task list used by the application.
-     * @param ui The user interface used to display messages.
+     * @param ui The user interface used to get messages.
      * @param storage The storage used to manage task data.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         TaskList sublist = tasks.findAllMatch(keyword);
-        ui.displayFindResult(sublist);
+        this.message = ui.getFindResultMessage(sublist);
     }
 
 }

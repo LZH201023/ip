@@ -13,6 +13,7 @@ public class Duck {
     private TaskList tasks;
     private final Ui ui;
     private final boolean hasError;
+    private String commandType;
 
     /**
      * Constructs a {@code Duck} instance with the specified file path for data storage.
@@ -34,7 +35,7 @@ public class Duck {
         try {
             tasks = storage.load();
         } catch (DuckException e) {
-            ui.showLoadingError();
+            System.out.println(ui.getLoadingErrorMessage());
             tasks = new TaskList();
         }
     }
@@ -47,10 +48,10 @@ public class Duck {
     public void run() {
         boolean isExit = false;
         if (this.hasError) {
-            ui.showUnsuccessfulStarting();
+            System.out.println(ui.getUnsuccessfulStartingMessage());
             return;
         }
-        this.ui.greet();
+        //this.ui.greet();
         while (!isExit) {
             try {
                 String nextInput = ui.readInput();
@@ -59,11 +60,29 @@ public class Duck {
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
             } catch (DuckException e) {
-                ui.showError(e.getMessage());
+               // ui.showError(e.getMessage());
             } finally {
                 ui.showLine();
             }
         }
+    }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parse(input);
+            c.execute(tasks, ui, storage);
+            commandType = c.getClass().getSimpleName();
+            return c.getString();
+        } catch (DuckException e) {
+            commandType = "UNKNOWN";
+            return e.getMessage();
+        }
+    }
+    public String getCommandType() {
+        return commandType;
     }
 
     /**
