@@ -1,6 +1,5 @@
 package duck;
 
-import duck.ui.Main;
 import javafx.application.Application;
 
 /**
