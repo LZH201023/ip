@@ -1,5 +1,6 @@
-package duck;
+package duck.ui;
 
+import duck.Duck;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -15,6 +16,8 @@ import javafx.util.Duration;
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
+
+    private static final String EXIT_COMMAND_NAME = "ExitCommand";
 
     @FXML
     private ScrollPane scrollPane;
@@ -42,16 +45,6 @@ public class MainWindow extends AnchorPane {
         duck = d;
     }
 
-    private static boolean isBye(String s) {
-        if (s.length() != 3) {
-            return false;
-        }
-        boolean b1 = s.charAt(0) == 'b' || s.charAt(0) == 'B';
-        boolean b2 = s.charAt(1) == 'y' || s.charAt(1) == 'Y';
-        boolean b3 = s.charAt(2) == 'e' || s.charAt(2) == 'E';
-        return b1 && b2 && b3;
-    }
-
     /**
      * Creates two dialog boxes, one echoing user input and the other containing Duck's reply and then appends them to
      * the dialog container. Clears the user input after processing.
@@ -67,7 +60,7 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getDukeDialog(response, dukeImage, commandType)
         );
 
-        if (isBye(input)) {
+        if (commandType.equals(EXIT_COMMAND_NAME)) {
             PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
             delay.setOnFinished(event -> Platform.exit());
             delay.play();

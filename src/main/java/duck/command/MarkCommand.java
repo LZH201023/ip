@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import duck.DuckException;
 import duck.Storage;
-import duck.Ui;
 import duck.task.TaskList;
+import duck.ui.Ui;
 
 /**
  * Represents a command that marks a task in the task list as completed.
@@ -36,12 +36,12 @@ public class MarkCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DuckException {
 
-        if (index > 0 && index <= tasks.getLength()) {
-            tasks.markTaskAt(index - 1);
-            this.message = ui.getMarkMessage(tasks.getTask(index - 1));
-        } else {
+        if (index <= 0 || index > tasks.getLength()) {
             throw new DuckException("Task index out of bound.");
         }
+
+        tasks.markTaskAt(index - 1);
+        this.message = ui.getMarkMessage(tasks.getTask(index - 1));
 
         // Update memory
         try {

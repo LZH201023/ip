@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import duck.DuckException;
 import duck.Storage;
-import duck.Ui;
 import duck.task.Task;
 import duck.task.TaskList;
+import duck.ui.Ui;
 
 /**
  * Represents a command that adds a task to the task list.

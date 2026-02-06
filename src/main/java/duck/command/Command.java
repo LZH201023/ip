@@ -2,8 +2,9 @@ package duck.command;
 
 import duck.DuckException;
 import duck.Storage;
-import duck.Ui;
 import duck.task.TaskList;
+import duck.ui.Ui;
+
 /**
  * Represents an executable command in the application.
  * Each concrete subclass defines specific behavior for user instructions.

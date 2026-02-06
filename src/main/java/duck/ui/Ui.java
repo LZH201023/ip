@@ -1,4 +1,4 @@
-package duck;
+package duck.ui;
 
 import java.util.Scanner;
 
@@ -105,15 +105,6 @@ public class Ui {
      */
     public String getExitMessage() {
         return "Bye. Hope to see you again soon!";
-    }
-
-    /**
-     * Displays an error message to the user.
-     *
-     * @param errorMessage The error message to be displayed.
-     */
-    public String getErrorMessage(String errorMessage) {
-        return errorMessage;
     }
 
     /**

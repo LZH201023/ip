@@ -2,6 +2,7 @@ package duck;
 
 import duck.command.Command;
 import duck.task.TaskList;
+import duck.ui.Ui;
 
 /**
  * Represents the main application class for Duck.
@@ -40,33 +41,6 @@ public class Duck {
         }
     }
 
-
-    /**
-     * Starts and runs the main application loop.
-     * This method handles user input, command parsing, execution, and termination.
-     */
-    public void run() {
-        boolean isExit = false;
-        if (this.hasError) {
-            System.out.println(ui.getUnsuccessfulStartingMessage());
-            return;
-        }
-        //this.ui.greet();
-        while (!isExit) {
-            try {
-                String nextInput = ui.readInput();
-                ui.showLine();
-                Command c = Parser.parse(nextInput);
-                c.execute(tasks, ui, storage);
-                isExit = c.isExit();
-            } catch (DuckException e) {
-               // ui.showError(e.getMessage());
-            } finally {
-                ui.showLine();
-            }
-        }
-    }
-
     /**
      * Generates a response for the user's chat message.
      */
@@ -83,15 +57,6 @@ public class Duck {
     }
     public String getCommandType() {
         return commandType;
-    }
-
-    /**
-     * Launches the Duck application.
-     *
-     * @param args Command-line arguments provided at startup.
-     */
-    public static void main(String[] args) {
-        new Duck("data/duck.txt").run();
     }
 
 }

@@ -68,6 +68,69 @@ class Parser {
         return b1 && b2 && b3;
     }
 
+    private static AddCommand parseTodoTask(String command) throws DuckException {
+        String description = command.substring(4);
+        if (description.isBlank()) {
+            throw new DuckException("Missing todo description!");
+        }
+
+        return new AddCommand(new TodoTask(description.strip()));
+    }
+
+    private static AddCommand parseDeadlineTask(String command) throws DuckException {
+        String[] parts = command.substring(8).concat(" ").split("/");
+        if (parts.length < 2) {
+            throw new DuckException("Missing deadline!");
+        } else if (parts.length > 2) {
+            throw new DuckException("Wrong command format.");
+        } else if (parts[0].isBlank()) {
+            throw new DuckException("Missing deadline description!");
+        } else if (!parts[1].startsWith("by")) {
+            throw new DuckException("Wrong command format.");
+        } else if (parts[1].substring(2).isBlank()) {
+            throw new DuckException("Did you forget to specify deadline?");
+        }
+
+        parts[0] = parts[0].strip();
+        parts[1] = parts[1].substring(2).strip();
+        try {
+            LocalDate ddl = LocalDate.parse(parts[1]);
+            return new AddCommand(new DeadlineTask(parts[0], ddl));
+        } catch (DateTimeParseException e) {
+            throw new DuckException("Wrong date format:\n" + e.getMessage());
+        }
+    }
+
+    private static AddCommand parseEventTask(String command) throws DuckException {
+        String[] parts = command.substring(5).concat(" ").split("/");
+        if (parts.length < 2) {
+            throw new DuckException("Missing time of event!");
+        } else if (parts.length == 2) {
+            throw new DuckException("Please specify a proper timing for event.");
+        } else if (parts.length > 3) {
+            throw new DuckException("Wrong command format.");
+        } else if (parts[0].isBlank()) {
+            throw new DuckException("Missing event description!");
+        } else if (!parts[1].startsWith("from") || !parts[2].startsWith("to")) {
+            throw new DuckException("Wrong command format.");
+        } else if (parts[1].substring(4).isBlank()) {
+            throw new DuckException("Oops, did you forget starting time?");
+        } else if (parts[2].substring(2).isBlank()) {
+            throw new DuckException("Oops, did you forget ending time?");
+        }
+
+        parts[0] = parts[0].strip();
+        parts[1] = parts[1].substring(4).strip();
+        parts[2] = parts[2].substring(2).strip();
+        try {
+            LocalDate from = LocalDate.parse(parts[1]);
+            LocalDate to = LocalDate.parse(parts[2]);
+            return new AddCommand(new EventTask(parts[0], from, to));
+        } catch (DateTimeParseException e) {
+            throw new DuckException("Wrong date format:\n" + e.getMessage());
+        }
+    }
+
     /**
      * Parses the given raw user input into a corresponding {@link Command}.
      * This method trims surrounding whitespace and determines the command type based on prefixes and keywords.
@@ -77,79 +140,28 @@ class Parser {
      * @throws DuckException If the input does not match any valid command format.
      */
     public static Command parse(String nextInput) throws DuckException {
-        String cmd = nextInput.strip();
-        if (cmd.equals("list")) {
+        String command = nextInput.strip();
+        if (command.equals("list")) {
             return new ListCommand();
-        } else if (cmd.startsWith("mark")) {
-            int index = parseIndex(cmd.substring(4).stripLeading());
+        } else if (command.startsWith("mark")) {
+            int index = parseIndex(command.substring(4).stripLeading());
             return new MarkCommand(index);
-        } else if (cmd.startsWith("unmark")) {
-            int index = parseIndex(cmd.substring(6).stripLeading());
+        } else if (command.startsWith("unmark")) {
+            int index = parseIndex(command.substring(6).stripLeading());
             return new UnmarkCommand(index);
-        } else if (cmd.startsWith("delete")) {
-            int index = parseIndex(cmd.substring(6).stripLeading());
+        } else if (command.startsWith("delete")) {
+            int index = parseIndex(command.substring(6).stripLeading());
             return new DeleteCommand(index);
-        } else if (isBye(cmd)) {
+        } else if (isBye(command)) {
             return new ExitCommand();
-        } else if (cmd.startsWith("todo")) {
-            String description = cmd.substring(4);
-            if (description.isBlank()) {
-                throw new DuckException("Missing todo description!");
-            } else {
-                return new AddCommand(new TodoTask(description.strip()));
-            }
-        } else if (cmd.startsWith("deadline")) {
-            String[] parts = cmd.substring(8).concat(" ").split("/");
-            if (parts.length < 2) {
-                throw new DuckException("Missing deadline!");
-            } else if (parts.length > 2) {
-                throw new DuckException("Wrong command format.");
-            } else if (parts[0].isBlank()) {
-                throw new DuckException("Missing deadline description!");
-            } else if (!parts[1].startsWith("by")) {
-                throw new DuckException("Wrong command format.");
-            } else if (parts[1].substring(2).isBlank()) {
-                throw new DuckException("Did you forget to specify deadline?");
-            } else {
-                parts[0] = parts[0].strip();
-                parts[1] = parts[1].substring(2).strip();
-                try {
-                    LocalDate ddl = LocalDate.parse(parts[1]);
-                    return new AddCommand(new DeadlineTask(parts[0], ddl));
-                } catch (DateTimeParseException e) {
-                    throw new DuckException("Wrong date format:\n" + e.getMessage());
-                }
-            }
-        } else if (cmd.startsWith("event")) {
-            String[] parts = cmd.substring(5).concat(" ").split("/");
-            if (parts.length < 2) {
-                throw new DuckException("Missing time of event!");
-            } else if (parts.length == 2) {
-                throw new DuckException("Please specify a proper timing for event.");
-            } else if (parts.length > 3) {
-                throw new DuckException("Wrong command format.");
-            } else if (parts[0].isBlank()) {
-                throw new DuckException("Missing event description!");
-            } else if (!parts[1].startsWith("from") || !parts[2].startsWith("to")) {
-                throw new DuckException("Wrong command format.");
-            } else if (parts[1].substring(4).isBlank()) {
-                throw new DuckException("Oops, did you forget starting time?");
-            } else if (parts[2].substring(2).isBlank()) {
-                throw new DuckException("Oops, did you forget ending time?");
-            } else {
-                parts[0] = parts[0].strip();
-                parts[1] = parts[1].substring(4).strip();
-                parts[2] = parts[2].substring(2).strip();
-                try {
-                    LocalDate from = LocalDate.parse(parts[1]);
-                    LocalDate to = LocalDate.parse(parts[2]);
-                    return new AddCommand(new EventTask(parts[0], from, to));
-                } catch (DateTimeParseException e) {
-                    throw new DuckException("Wrong date format:\n" + e.getMessage());
-                }
-            }
-        } else if (cmd.startsWith("find")) {
-            String keyword = cmd.substring(4).strip();
+        } else if (command.startsWith("todo")) {
+            return parseTodoTask(command);
+        } else if (command.startsWith("deadline")) {
+            return parseDeadlineTask(command);
+        } else if (command.startsWith("event")) {
+            return parseEventTask(command);
+        } else if (command.startsWith("find")) {
+            String keyword = command.substring(4).strip();
             return new FindCommand(keyword);
         } else {
             // Command cannot be identified

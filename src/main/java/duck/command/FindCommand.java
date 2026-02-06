@@ -1,8 +1,8 @@
 package duck.command;
 
 import duck.Storage;
-import duck.Ui;
 import duck.task.TaskList;
+import duck.ui.Ui;
 
 /**
  * Represents a command that finds tasks by keyword.

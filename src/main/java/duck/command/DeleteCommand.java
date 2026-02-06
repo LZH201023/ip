@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import duck.DuckException;
 import duck.Storage;
-import duck.Ui;
 import duck.task.Task;
 import duck.task.TaskList;
+import duck.ui.Ui;
 
 /**
  * Represents a command that deletes a task from the task list.
@@ -37,12 +37,12 @@ public class DeleteCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DuckException {
 
-        if (index > 0 && index <= tasks.getLength()) {
-            Task task = tasks.deleteTaskAt(index - 1);
-            this.message = ui.getDeleteMessage(task);
-        } else {
+        if (index <= 0 || index > tasks.getLength()) {
             throw new DuckException("Task index out of bound.");
         }
+
+        Task task = tasks.deleteTaskAt(index - 1);
+        this.message = ui.getDeleteMessage(task);
 
         // Update memory
         try {
