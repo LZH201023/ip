@@ -52,4 +52,14 @@ public class MarkCommand extends Command {
         }
     }
 
+    /**
+     * Returns type of the command.
+     *
+     * @return Type of command.
+     */
+    @Override
+    public CommandType getCommandType() {
+        return CommandType.MARK_COMMAND;
+    }
+
 }

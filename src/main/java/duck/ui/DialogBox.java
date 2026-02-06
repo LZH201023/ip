@@ -3,6 +3,7 @@ package duck.ui;
 import java.io.IOException;
 import java.util.Collections;
 
+import duck.command.CommandType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -51,23 +52,23 @@ public class DialogBox extends HBox {
         return new DialogBox(text, img);
     }
 
-    private void changeDialogStyle(String commandType) {
+    private void changeDialogStyle(CommandType commandType) {
         switch(commandType) {
-        case "AddCommand":
+        case ADD_COMMAND:
             dialog.getStyleClass().add("add-label");
             break;
-        case "MarkCommand":
+        case MARK_COMMAND:
             dialog.getStyleClass().add("marked-label");
             break;
-        case "DeleteCommand":
+        case DELETE_COMMAND:
             dialog.getStyleClass().add("delete-label");
             break;
         default:
-            // Do nothing
+            // Fallthrough
         }
     }
 
-    public static DialogBox getDukeDialog(String text, Image img, String commandType) {
+    public static DialogBox getDukeDialog(String text, Image img, CommandType commandType) {
         var db = new DialogBox(text, img);
         db.flip();
         db.changeDialogStyle(commandType);

@@ -1,10 +1,10 @@
 package duck.ui;
 
 import duck.Duck;
+import duck.command.CommandType;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -17,16 +17,12 @@ import javafx.util.Duration;
  */
 public class MainWindow extends AnchorPane {
 
-    private static final String EXIT_COMMAND_NAME = "ExitCommand";
-
     @FXML
     private ScrollPane scrollPane;
     @FXML
     private VBox dialogContainer;
     @FXML
     private TextField userInput;
-    @FXML
-    private Button sendButton;
 
     private Duck duck;
 
@@ -53,14 +49,14 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = duck.getResponse(input);
-        String commandType = duck.getCommandType();
+        CommandType commandType = duck.getCommandType();
 
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeDialog(response, dukeImage, commandType)
         );
 
-        if (commandType.equals(EXIT_COMMAND_NAME)) {
+        if (commandType.equals(CommandType.EXIT_COMMAND)) {
             PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
             delay.setOnFinished(event -> Platform.exit());
             delay.play();

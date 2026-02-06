@@ -47,4 +47,14 @@ public class AddCommand extends Command {
                     + "\nYour data could be lost");
         }
     }
+
+    /**
+     * Returns type of the command.
+     *
+     * @return Type of command.
+     */
+    @Override
+    public CommandType getCommandType() {
+        return CommandType.ADD_COMMAND;
+    }
 }

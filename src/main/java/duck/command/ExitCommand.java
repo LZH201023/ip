@@ -24,12 +24,12 @@ public class ExitCommand extends Command {
     }
 
     /**
-     * Indicates that this command signals the application to exit.
+     * Returns type of the command.
      *
-     * @return {@code true} to indicate application termination.
+     * @return Type of command.
      */
     @Override
-    public boolean isExit() {
-        return true;
+    public CommandType getCommandType() {
+        return CommandType.EXIT_COMMAND;
     }
 }

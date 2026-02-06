@@ -34,12 +34,9 @@ public abstract class Command {
     }
 
     /**
-     * Indicates whether this command signals the application to exit.
-     * Subclasses may override this method to return {@code true} for exit commands.
+     * Returns type of the command.
      *
-     * @return {@code true} if this command requests application termination. Otherwise, {@code false}.
+     * @return Type of command.
      */
-    public boolean isExit() {
-        return false;
-    }
+    public abstract CommandType getCommandType();
 }

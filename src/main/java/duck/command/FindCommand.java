@@ -34,4 +34,14 @@ public class FindCommand extends Command {
         this.message = ui.getFindResultMessage(sublist);
     }
 
+    /**
+     * Returns type of the command.
+     *
+     * @return Type of command.
+     */
+    @Override
+    public CommandType getCommandType() {
+        return CommandType.FIND_COMMAND;
+    }
+
 }

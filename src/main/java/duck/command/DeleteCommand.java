@@ -53,4 +53,14 @@ public class DeleteCommand extends Command {
         }
     }
 
+    /**
+     * Returns type of the command.
+     *
+     * @return Type of command.
+     */
+    @Override
+    public CommandType getCommandType() {
+        return CommandType.DELETE_COMMAND;
+    }
+
 }

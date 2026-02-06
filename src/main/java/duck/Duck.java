@@ -1,6 +1,7 @@
 package duck;
 
 import duck.command.Command;
+import duck.command.CommandType;
 import duck.task.TaskList;
 import duck.ui.Ui;
 
@@ -13,8 +14,7 @@ public class Duck {
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
-    private final boolean hasError;
-    private String commandType;
+    private CommandType commandType;
 
     /**
      * Constructs a {@code Duck} instance with the specified file path for data storage.
@@ -27,10 +27,7 @@ public class Duck {
         storage = new Storage(filePath);
 
         if (!storage.getStatus()) {
-            this.hasError = true;
             return;
-        } else {
-            this.hasError = false;
         }
 
         try {
@@ -48,14 +45,14 @@ public class Duck {
         try {
             Command c = Parser.parse(input);
             c.execute(tasks, ui, storage);
-            commandType = c.getClass().getSimpleName();
+            commandType = c.getCommandType();
             return c.getString();
         } catch (DuckException e) {
-            commandType = "UNKNOWN";
+            commandType = CommandType.UNKNOWN_COMMAND;
             return e.getMessage();
         }
     }
-    public String getCommandType() {
+    public CommandType getCommandType() {
         return commandType;
     }
 

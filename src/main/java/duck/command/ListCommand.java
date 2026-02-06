@@ -22,4 +22,13 @@ public class ListCommand extends Command {
         this.message = ui.getListMessage(tasks);
     }
 
+    /**
+     * Returns type of the command.
+     *
+     * @return Type of command.
+     */
+    @Override
+    public CommandType getCommandType() {
+        return CommandType.LIST_COMMAND;
+    }
 }

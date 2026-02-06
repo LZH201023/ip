@@ -52,4 +52,14 @@ public class UnmarkCommand extends Command {
         }
     }
 
+    /**
+     * Returns type of the command.
+     *
+     * @return Type of command.
+     */
+    @Override
+    public CommandType getCommandType() {
+        return CommandType.UNMARK_COMMAND;
+    }
+
 }
