@@ -6,8 +6,25 @@ package duck.task;
  */
 public abstract class Task {
 
+    protected String tag;
     protected String description;
     protected boolean isDone;
+
+    /**
+     * Sets the tag of this task.
+     *
+     * @param tag The tag string.
+     */
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    /**
+     * Removes the tag of this task.
+     */
+    public void removeTag() {
+        this.tag = null;
+    }
 
     /**
      * Constructs a new <code>Task</code> object, by default it is not done yet.

@@ -62,9 +62,11 @@ public class EventTask extends Task {
      */
     @Override
     public String toString() {
+        String suffix = this.tag == null ? "" : "#" + this.tag;
         return "[E][" + (this.isDone ? "X" : " ") + "] " + this.description
                 + " (from: " + startTime.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + " to: "
-                + endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + ")";
+                + endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + ")"
+                + " " + suffix;
     }
 
 }

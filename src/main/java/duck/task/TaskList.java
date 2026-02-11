@@ -89,6 +89,24 @@ public class TaskList {
     }
 
     /**
+     * Tags the task at the specified index.
+     *
+     * @param idx Index of the task to tag (0-based).
+     */
+    public void tagTaskAt(int idx, String tag) {
+        this.getTask(idx).setTag(tag);
+    }
+
+    /**
+     * Untags the task at the specified index.
+     *
+     * @param idx Index of the task to untag (0-based).
+     */
+    public void untagTaskAt(int idx) {
+        this.getTask(idx).removeTag();
+    }
+
+    /**
      * Returns a string representation of this task list.
      * Each task is displayed on a new line and numbered starting from 1.
      *

@@ -108,14 +108,6 @@ public class Ui {
     }
 
     /**
-     * Displays a message indicating that application startup was unsuccessful.
-     */
-    public String getUnsuccessfulStartingMessage() {
-        return "Memory setup unsuccessful, chatbot closing, bye!";
-    }
-
-
-    /**
      * Displays a message indicating that stored data could not be loaded.
      */
     public String getLoadingErrorMessage() {
@@ -133,6 +125,26 @@ public class Ui {
         } else {
             return "Here are the found tasks:\n" + sublist;
         }
+    }
+
+    /**
+     * Returns the tagging message.
+     *
+     * @param task Task that is tagged.
+     * @return The message corresponding to the tagging command.
+     */
+    public String getTagMessage(Task task) {
+        return "Done! I've tagged this task:\n" + task;
+    }
+
+    /**
+     * Returns the untagging message.
+     *
+     * @param task Task that is untagged.
+     * @return The message corresponding to the untagging command.
+     */
+    public String getUntagMessage(Task task) {
+        return "Okay! I've untagged this task:\n" + task;
     }
 
     /**

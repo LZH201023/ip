@@ -56,7 +56,9 @@ public class DeadlineTask extends Task {
      */
     @Override
     public String toString() {
+        String suffix = this.tag == null ? "" : "#" + this.tag;
         return "[D][" + (this.isDone ? "X" : " ") + "] " + this.description
-                + " (by: " + deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + ")";
+                + " (by: " + deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH)) + ")"
+                + " " + suffix;
     }
 }

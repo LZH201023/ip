@@ -3,14 +3,7 @@ package duck;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import duck.command.AddCommand;
-import duck.command.Command;
-import duck.command.DeleteCommand;
-import duck.command.ExitCommand;
-import duck.command.FindCommand;
-import duck.command.ListCommand;
-import duck.command.MarkCommand;
-import duck.command.UnmarkCommand;
+import duck.command.*;
 import duck.task.DeadlineTask;
 import duck.task.EventTask;
 import duck.task.TodoTask;
@@ -44,11 +37,10 @@ class Parser {
         } else {
             throw new DuckException("Oh no, please specify a proper task!");
         }
-        if (num > 0) {
-            return num;
-        } else {
-            throw new DuckException("duck.task.Task index out of bound.");
+        if (num <= 0) {
+            throw new DuckException("Task index out of bound.");
         }
+        return num;
     }
 
     /**
@@ -131,6 +123,21 @@ class Parser {
         }
     }
 
+    private static TagCommand parseTagCommand(String command) throws DuckException {
+        String body = command.substring(3).strip();
+        int l = body.indexOf(" ");
+        if (l == -1) {
+            throw new DuckException("Missing task index!");
+        }
+        int num = parseIndex(body.substring(0, l));
+        String message = body.substring(l).strip();
+        if (message.isEmpty()) {
+            throw new DuckException("Missing tag information!");
+        }
+
+        return new TagCommand(num, message);
+    }
+
     /**
      * Parses the given raw user input into a corresponding {@link Command}.
      * This method trims surrounding whitespace and determines the command type based on prefixes and keywords.
@@ -166,6 +173,12 @@ class Parser {
         } else if (command.startsWith("find")) {
             String keyword = command.substring(4).strip();
             return new FindCommand(keyword);
+        } else if (command.startsWith("tag")) {
+            return parseTagCommand(command);
+        } else if (command.startsWith("untag")) {
+            int index = parseIndex(command.substring(5).stripLeading());
+            assert index > 0 : "Invalid index";
+            return new UntagCommand(index);
         } else {
             // Command cannot be identified
             throw new DuckException("Sorry I can't understand...");

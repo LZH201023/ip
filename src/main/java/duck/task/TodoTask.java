@@ -33,6 +33,8 @@ public class TodoTask extends Task {
      */
     @Override
     public String toString() {
-        return "[T][" + (this.isDone ? "X" : " ") + "] " + this.description;
+        String suffix = this.tag == null ? "" : "#" + this.tag;
+        return "[T][" + (this.isDone ? "X" : " ") + "] " + this.description
+                + " " + suffix;
     }
 }
