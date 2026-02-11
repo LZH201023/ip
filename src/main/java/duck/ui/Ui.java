@@ -144,7 +144,7 @@ public class Ui {
      * @return The message corresponding to the untagging command.
      */
     public String getUntagMessage(Task task) {
-        return "Okay! I've untagged this task:\n" + task;
+        return "Okay. I've untagged this task:\n" + task;
     }
 
     /**
