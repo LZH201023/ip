@@ -20,7 +20,7 @@ import duck.task.TodoTask;
  */
 public class Storage {
 
-    private File file;
+    private final File file;
     private boolean isMemoryCheckPassed;
     private boolean isEmptyFile;
 
