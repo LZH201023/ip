@@ -82,11 +82,9 @@ public class TaskList {
      */
     public TaskList findAllMatch(String keyword) {
         TaskList sublist = new TaskList();
-        for (Task task : this.list) {
-            if (task.getDescription().contains(keyword)) {
-                sublist.addTask(task);
-            }
-        }
+        this.list.stream()
+                .filter(task -> task.getDescription().contains(keyword))
+                .forEach(sublist::addTask);
         return sublist;
     }
 
