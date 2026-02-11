@@ -21,7 +21,7 @@ import duck.task.TodoTask;
 public class Storage {
 
     private File file;
-    private boolean hasMemoryCheckPassed;
+    private boolean isMemoryCheckPassed;
     private boolean isEmptyFile;
 
     /**
@@ -32,7 +32,7 @@ public class Storage {
      */
     public Storage(String filePath) {
         this.file = new File(filePath);
-        this.hasMemoryCheckPassed = true;
+        this.isMemoryCheckPassed = true;
         checkMemory();
     }
 
@@ -49,7 +49,7 @@ public class Storage {
             }
             this.isEmptyFile = file.createNewFile();
         } catch (IOException e) {
-            this.hasMemoryCheckPassed = false;
+            this.isMemoryCheckPassed = false;
         }
     }
 
@@ -58,8 +58,8 @@ public class Storage {
      *
      * @return {@code true} if storage initialization succeeded. Otherwise, {@code false}.
      */
-    public boolean getStatus() {
-        return hasMemoryCheckPassed;
+    public boolean isMemoryCheckPassed() {
+        return isMemoryCheckPassed;
     }
 
     /**

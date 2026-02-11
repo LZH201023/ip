@@ -26,7 +26,7 @@ public class Duck {
         ui = new Ui();
         storage = new Storage(filePath);
 
-        if (!storage.getStatus()) {
+        if (!storage.isMemoryCheckPassed()) {
             return;
         }
 
