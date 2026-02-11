@@ -145,12 +145,15 @@ class Parser {
             return new ListCommand();
         } else if (command.startsWith("mark")) {
             int index = parseIndex(command.substring(4).stripLeading());
+            assert index > 0 : "Invalid index";
             return new MarkCommand(index);
         } else if (command.startsWith("unmark")) {
             int index = parseIndex(command.substring(6).stripLeading());
+            assert index > 0 : "Invalid index";
             return new UnmarkCommand(index);
         } else if (command.startsWith("delete")) {
             int index = parseIndex(command.substring(6).stripLeading());
+            assert index > 0 : "Invalid index";
             return new DeleteCommand(index);
         } else if (isBye(command)) {
             return new ExitCommand();
