@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Duck duck = new Duck("data/duck.txt");
+    private final Duck duck = new Duck("data/duck.txt");
 
     /**
      * Starts GUI and sets up FXML.
