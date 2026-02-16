@@ -16,7 +16,7 @@ public class TodoTask extends Task {
     }
 
     /**
-     * Convert <code>TodoTask</code> object into compact string,
+     * Converts <code>TodoTask</code> object into compact string,
      * which is to be stored through a <code>Storage</code> object.
      *
      * @return Compact string representation.
@@ -27,7 +27,7 @@ public class TodoTask extends Task {
     }
 
     /**
-     * Convert <code>TodoTask</code> object into string.
+     * Converts <code>TodoTask</code> object into string.
      *
      * @return String representation.
      */

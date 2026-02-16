@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 /**
- * Controller for the main GUI.
+ * The controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
 
@@ -26,8 +26,29 @@ public class MainWindow extends AnchorPane {
 
     private Duck duck;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuck.png"));
+    /*
+     * AI-assisted improvement:
+     * This code was improved using ChatGPT (GPT-5.2) to handle potential null values
+     * from getResourceAsStream(). The tool suggested adding explicit null checks and
+     * meaningful error messages to prevent a NullPointerException if the image
+     * resource cannot be found. I reviewed and adapted the suggestion to preserve
+     * the original structure of the image initialization.
+     */
+    private static final String USER_IMAGE_PATH = "/images/DaUser.png";
+    private static final String DUKE_IMAGE_PATH = "/images/DaDuck.png";
+    private final Image userImage = new Image(
+            java.util.Objects.requireNonNull(
+                    this.getClass().getResourceAsStream(USER_IMAGE_PATH),
+                    "Image resource not found: /images/DaUser.png"
+            )
+    );
+
+    private final Image dukeImage = new Image(
+            java.util.Objects.requireNonNull(
+                    this.getClass().getResourceAsStream(DUKE_IMAGE_PATH),
+                    "Image resource not found: /images/DaDuck.png"
+            )
+    );
 
     @FXML
     public void initialize() {

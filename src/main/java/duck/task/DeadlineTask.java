@@ -13,7 +13,7 @@ public class DeadlineTask extends Task {
     protected LocalDate deadline;
 
     /**
-     * Construct a new <code>DeadlineTask</code> object,
+     * Constructs a new <code>DeadlineTask</code> object,
      * date is based on the given <code>LocalDate</code> object.
      *
      * @param description Name of task.
@@ -25,7 +25,7 @@ public class DeadlineTask extends Task {
     }
 
     /**
-     * Construct a new <code>DeadlineTask</code> object,
+     * Constructs a new <code>DeadlineTask</code> object,
      * date is based on the given <code>String</code> object.
      *
      * @param description Name of task.
@@ -38,7 +38,7 @@ public class DeadlineTask extends Task {
     }
 
     /**
-     * Convert <code>DeadlineTask</code> object into compact string,
+     * Converts <code>DeadlineTask</code> object into compact string,
      * which is to be stored through a <code>Storage</code> object.
      *
      * @return Compact string representation.
@@ -50,7 +50,7 @@ public class DeadlineTask extends Task {
     }
 
     /**
-     * Convert <code>DeadlineTask</code> object into string.
+     * Converts <code>DeadlineTask</code> object into string.
      *
      * @return String representation.
      */

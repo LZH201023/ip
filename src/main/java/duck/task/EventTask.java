@@ -14,7 +14,7 @@ public class EventTask extends Task {
     protected LocalDate endTime;
 
     /**
-     * Construct a new <code>EventTask</code> object,
+     * Constructs a new <code>EventTask</code> object,
      * date is based on the given <code>LocalDate</code> objects.
      *
      * @param description Name of task.
@@ -28,7 +28,7 @@ public class EventTask extends Task {
     }
 
     /**
-     * Construct a new <code>EventTask</code> object,
+     * Constructs a new <code>EventTask</code> object,
      * date is based on the given <code>String</code> object.
      *
      * @param description Name of task.
@@ -44,7 +44,7 @@ public class EventTask extends Task {
     }
 
     /**
-     * Convert <code>EventTask</code> object into compact string,
+     * Converts <code>EventTask</code> object into compact string,
      * which is to be stored through a <code>Storage</code> object.
      *
      * @return Compact string representation.
@@ -56,7 +56,7 @@ public class EventTask extends Task {
     }
 
     /**
-     * Convert <code>EventTask</code> object into string.
+     * Converts <code>EventTask</code> object into string.
      *
      * @return String representation.
      */

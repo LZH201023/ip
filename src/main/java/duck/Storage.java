@@ -124,30 +124,32 @@ public class Storage {
                 throw new DuckException();
             }
             list.addTask(new TodoTask(description));
-        } else if (c1 == 'D') {
-            String[] texts = data.substring(2).concat(" ").split("/");
-            if (texts.length != 2) {
-                throw new DuckException();
-            }
-
-            try {
-                list.addTask(new DeadlineTask(texts[0].strip(), texts[1].strip()));
-            } catch (DateTimeParseException e) {
-                throw new DuckException();
-            }
-        } else if (c1 == 'E') {
-            String[] texts = data.substring(2).concat(" ").split("/");
-            if (texts.length != 3) {
-                throw new DuckException();
-            }
-
-            try {
-                list.addTask(new EventTask(texts[0].strip(), texts[1].strip(), texts[2].strip()));
-            } catch (DateTimeParseException e) {
-                throw new DuckException();
-            }
         } else {
-            throw new DuckException();
+            if (c1 == 'D') {
+                String[] texts = data.substring(2).concat(" ").split("/");
+                if (texts.length != 2) {
+                    throw new DuckException();
+                }
+    
+                try {
+                    list.addTask(new DeadlineTask(texts[0].strip(), texts[1].strip()));
+                } catch (DateTimeParseException e) {
+                    throw new DuckException();
+                }
+            } else if (c1 == 'E') {
+                String[] texts = data.substring(2).concat(" ").split("/");
+                if (texts.length != 3) {
+                    throw new DuckException();
+                }
+    
+                try {
+                    list.addTask(new EventTask(texts[0].strip(), texts[1].strip(), texts[2].strip()));
+                } catch (DateTimeParseException e) {
+                    throw new DuckException();
+                }
+            } else {
+                throw new DuckException();
+            }
         }
 
         if (isMarked) {
