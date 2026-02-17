@@ -11,6 +11,16 @@ public abstract class Task {
     protected boolean isDone;
 
     /**
+     * Constructs a new <code>Task</code> object, by default it is not done yet.
+     *
+     * @param description Name of task.
+     */
+    public Task(String description) {
+        this.description = description;
+        this.isDone = false;
+    }
+
+    /**
      * Sets the tag of this task.
      *
      * @param tag The tag string.
@@ -24,16 +34,6 @@ public abstract class Task {
      */
     public void removeTag() {
         this.tag = null;
-    }
-
-    /**
-     * Constructs a new <code>Task</code> object, by default it is not done yet.
-     *
-     * @param description Name of task.
-     */
-    public Task(String description) {
-        this.description = description;
-        this.isDone = false;
     }
 
     /**

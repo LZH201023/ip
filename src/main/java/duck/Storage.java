@@ -130,7 +130,6 @@ public class Storage {
                 if (texts.length != 2) {
                     throw new DuckException();
                 }
-    
                 try {
                     list.addTask(new DeadlineTask(texts[0].strip(), texts[1].strip()));
                 } catch (DateTimeParseException e) {
@@ -141,7 +140,6 @@ public class Storage {
                 if (texts.length != 3) {
                     throw new DuckException();
                 }
-    
                 try {
                     list.addTask(new EventTask(texts[0].strip(), texts[1].strip(), texts[2].strip()));
                 } catch (DateTimeParseException e) {

@@ -17,6 +17,9 @@ import javafx.util.Duration;
  */
 public class MainWindow extends AnchorPane {
 
+    private static final String USER_IMAGE_PATH = "/images/DaUser.png";
+    private static final String DUKE_IMAGE_PATH = "/images/DaDuck.png";
+
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -34,8 +37,6 @@ public class MainWindow extends AnchorPane {
      * resource cannot be found. I reviewed and adapted the suggestion to preserve
      * the original structure of the image initialization.
      */
-    private static final String USER_IMAGE_PATH = "/images/DaUser.png";
-    private static final String DUKE_IMAGE_PATH = "/images/DaDuck.png";
     private final Image userImage = new Image(
             java.util.Objects.requireNonNull(
                     this.getClass().getResourceAsStream(USER_IMAGE_PATH),
