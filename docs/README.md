@@ -106,7 +106,7 @@ bye
 ## Additional Information
 
 - Tasks are saved automatically and loaded when Duck starts.
-- Command keywords are case-sensitive except, unless otherwise specified.
+- Command keywords are case-sensitive, unless otherwise specified.
 - Task numbers refer to the index shown in the task list (starting from 1).
 - Invalid command formats will display an error message.
 
