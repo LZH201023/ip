@@ -1,4 +1,4 @@
-# Duck Chatbot User Guide
+# Duck User Guide
 
 Duck is a task management chatbot that helps you keep track of todos, deadlines, and events.  
 It provides a simple interface to organize tasks efficiently and stores them automatically for future use.
@@ -8,7 +8,7 @@ It provides a simple interface to organize tasks efficiently and stores them aut
 ## Getting Started
 
 ### Prerequisites
-- Java **17 or above** installed.
+- Java **17** installed (this is the preferred version).
 
 ### Running Duck
 1. Download the latest `.jar` file.
