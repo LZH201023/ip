@@ -23,8 +23,8 @@ java -jar duck.jar
 ---
 
 ## Using Duck
-
-Duck supports the following commands (note that all dates should be in YYYY-MM-DD format):
+Before starting: note that **all dates should be in YYYY-MM-DD format!**
+Duck supports the following commands:
 
 ### Add a todo
 Adds a simple task.
