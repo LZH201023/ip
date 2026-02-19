@@ -44,7 +44,7 @@ deadline DESCRIPTION /by DATE
 ### Add an event
 Adds an event with a start and end time.
 ```
-event DESCRIPTION /from START /to END
+event DESCRIPTION /from START_DATE /to END_DATE
 ```
 ---
 
