@@ -84,7 +84,9 @@ find KEYWORD
 ---
 
 ### Tag a task
-Adds a tag to a task.
+Adds a tag to a task. Note that a tag is treated as a temporary piece of information,
+
+and therefore will not be saved to storage.
 ```
 tag TASK_NUMBER DESCRIPTION
 ```
