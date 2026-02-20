@@ -1,7 +1,5 @@
 package duck.ui;
 
-import java.util.Scanner;
-
 import duck.task.Task;
 import duck.task.TaskList;
 
@@ -10,48 +8,6 @@ import duck.task.TaskList;
  * This class is responsible for displaying messages and reading user input.
  */
 public class Ui {
-
-    private static final String HLINE = "-".repeat(50);
-    private static final String DUCK = " ____        ____ _   __\n"
-            + "|  _ \\ _   _|  __| | / /\n"
-            + "| | | | | | | |  | /  /\n"
-            + "| |_| | |_| | |__| |\\ \\\n"
-            + "|____/ \\__,_|____|_| \\_\\";
-
-    private Scanner sc;
-
-    /**
-     * Constructs a {@code Ui} instance and initializes the input scanner.
-     */
-    public Ui() {
-        this.sc = new Scanner(System.in);
-    }
-
-    /**
-     * Gets the greeting message and application logo.
-     * This method also provides brief instructions to the user.
-     * @return Greeting message.
-     */
-    public String getGreetMessage() {
-        return HLINE + "\nHello! I'm\n" + DUCK
-                + "\nWhat can I do for you?\n(btw, plz specify time in yyyy-mm-dd)\n" + HLINE;
-    }
-
-    /**
-     * Displays a horizontal separator line.
-     */
-    public void showLine() {
-        System.out.println(HLINE);
-    }
-
-    /**
-     * Reads the next line of user input from standard input.
-     *
-     * @return The next input line entered by the user.
-     */
-    public String readInput() {
-        return sc.nextLine();
-    }
 
     /**
      * Displays a message indicating that a task has been marked as completed.
@@ -88,7 +44,8 @@ public class Ui {
      */
     public String getAddMessage(Task task, int len) {
         return "Got it. I've added this task:\n" + task
-                + "\nNow you have " + len + " tasks in the list";
+                + "\nNow you have " + len + " task"
+                + (len == 1 ? " " : "s ") + "in the list";
     }
 
     /**
@@ -97,7 +54,7 @@ public class Ui {
      * @param tasks The task list to be displayed.
      */
     public String getListMessage(TaskList tasks) {
-        return "Here are the tasks in your list:\n" + tasks;
+        return "Here is your list:\n" + tasks;
     }
 
     /**
@@ -123,7 +80,7 @@ public class Ui {
         if (sublist.getLength() == 0) {
             return "No matching task found!";
         } else {
-            return "Here are the found tasks:\n" + sublist;
+            return "Nice, I've found it:\n" + sublist;
         }
     }
 
@@ -147,10 +104,4 @@ public class Ui {
         return "Okay. I've untagged this task:\n" + task;
     }
 
-    /**
-     * Closes the input scanner and releases associated resources.
-     */
-    public void closeScanner() {
-        this.sc.close();
-    }
 }
