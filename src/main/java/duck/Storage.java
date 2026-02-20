@@ -125,8 +125,9 @@ public class Storage {
             }
             list.addTask(new TodoTask(description));
         } else {
+            String[] temp = data.substring(2).concat(" ").split("/");
             if (c1 == 'D') {
-                String[] texts = data.substring(2).concat(" ").split("/");
+                String[] texts = temp;
                 if (texts.length != 2) {
                     throw new DuckException();
                 }
@@ -136,7 +137,7 @@ public class Storage {
                     throw new DuckException();
                 }
             } else if (c1 == 'E') {
-                String[] texts = data.substring(2).concat(" ").split("/");
+                String[] texts = temp;
                 if (texts.length != 3) {
                     throw new DuckException();
                 }
