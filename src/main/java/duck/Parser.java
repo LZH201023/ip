@@ -23,24 +23,16 @@ import duck.task.TodoTask;
  */
 class Parser {
 
-    /**
-     * Parses a one-based task index from the given string.
-     * This method accepts only strings containing digits and rejects non-positive values.
-     *
-     * @param s The string containing the task index.
-     * @return The parsed one-based task index.
-     * @throws DuckException If the input contains non-digit characters or if the index is not positive.
-     */
-    private static int parseIndex(String s) throws DuckException {
+    private static int parseIndex(String command) throws DuckException {
         int num = 0;
         int idx = 0;
-        while (idx < s.length() && Character.isDigit(s.charAt(idx))) {
+        while (idx < command.length() && Character.isDigit(command.charAt(idx))) {
             idx++;
         }
-        if (idx > 0 && idx == s.length()) {
+        if (idx > 0 && idx == command.length()) {
             int mult = 1;
             for (int i = idx - 1; i >= 0; i--) {
-                num += mult * (s.charAt(i) - '0');
+                num += mult * (command.charAt(i) - '0');
                 mult *= 10;
             }
         } else {
@@ -52,20 +44,13 @@ class Parser {
         return num;
     }
 
-    /**
-     * Checks whether the given string represents the exit command.
-     * This check is case-insensitive and matches only the word "bye".
-     *
-     * @param s The input string to be checked.
-     * @return {@code true} if the input equals "bye" ignoring case. Otherwise, {@code false}.
-     */
-    private static boolean isBye(String s) {
-        if (s.length() != 3) {
+    private static boolean isBye(String command) {
+        if (command.length() != 3) {
             return false;
         }
-        boolean b1 = s.charAt(0) == 'b' || s.charAt(0) == 'B';
-        boolean b2 = s.charAt(1) == 'y' || s.charAt(1) == 'Y';
-        boolean b3 = s.charAt(2) == 'e' || s.charAt(2) == 'E';
+        boolean b1 = command.charAt(0) == 'b' || command.charAt(0) == 'B';
+        boolean b2 = command.charAt(1) == 'y' || command.charAt(1) == 'Y';
+        boolean b3 = command.charAt(2) == 'e' || command.charAt(2) == 'E';
         return b1 && b2 && b3;
     }
 

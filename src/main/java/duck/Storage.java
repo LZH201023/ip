@@ -125,23 +125,22 @@ public class Storage {
             }
             list.addTask(new TodoTask(description));
         } else {
+            String[] temp = data.substring(2).concat(" ").split("/");
             if (c1 == 'D') {
-                String[] texts = data.substring(2).concat(" ").split("/");
-                if (texts.length != 2) {
+                if (temp.length != 2) {
                     throw new DuckException();
                 }
                 try {
-                    list.addTask(new DeadlineTask(texts[0].strip(), texts[1].strip()));
+                    list.addTask(new DeadlineTask(temp[0].strip(), temp[1].strip()));
                 } catch (DateTimeParseException e) {
                     throw new DuckException();
                 }
             } else if (c1 == 'E') {
-                String[] texts = data.substring(2).concat(" ").split("/");
-                if (texts.length != 3) {
+                if (temp.length != 3) {
                     throw new DuckException();
                 }
                 try {
-                    list.addTask(new EventTask(texts[0].strip(), texts[1].strip(), texts[2].strip()));
+                    list.addTask(new EventTask(temp[0].strip(), temp[1].strip(), temp[2].strip()));
                 } catch (DateTimeParseException e) {
                     throw new DuckException();
                 }
