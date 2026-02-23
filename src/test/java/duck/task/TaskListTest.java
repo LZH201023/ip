@@ -19,4 +19,15 @@ class TaskListTest {
         TaskList list = new TaskList();
         assertEquals("***EMPTY LIST***", list.toString());
     }
+
+    /**
+     * Tests that {@code toString} returns the correct message
+     * when there is one task in the list.
+     */
+    @Test
+    void testToString_oneTodoTask_correctStringReturned() {
+        TaskList list = new TaskList();
+        list.addTask(new TodoTaskStub());
+        assertEquals("1.[T][X] ip", list.toString());
+    }
 }
